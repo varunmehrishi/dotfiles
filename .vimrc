@@ -34,7 +34,7 @@ Plugin 'google/vim-codefmt'
 Plugin 'google/vim-glaive'
 
 Plugin 'lervag/vimtex'
-Bundle 'ron89/thesaurus_query.vim'
+" Bundle 'ron89/thesaurus_query.vim'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'itchyny/lightline.vim'
@@ -143,3 +143,4 @@ Glaive codefmt clang_format_style='google'
 let g:tex_flavor = 'latex'
 let g:vimtex_view_method = 'skim'
 nnoremap <C-P> :YcmCompleter GoTo<CR>
+let g:tq_python_version = 3
