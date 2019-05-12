@@ -1,6 +1,7 @@
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
+set rtp+=/usr/local/opt/fzf
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
@@ -34,7 +35,7 @@ Plugin 'google/vim-codefmt'
 Plugin 'google/vim-glaive'
 
 Plugin 'lervag/vimtex'
-" Bundle 'ron89/thesaurus_query.vim'
+Bundle 'ron89/thesaurus_query.vim'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'itchyny/lightline.vim'
@@ -45,6 +46,7 @@ Plugin 'vim-scripts/indentpython.vim'
 Plugin 'tmhedberg/simpylfold'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'terryma/vim-expand-region'
+Plugin 'junegunn/fzf.vim'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 call glaive#Install()
@@ -75,7 +77,7 @@ if has('mac') && ($TERM == 'xterm-256color' || $TERM == 'screen-256color')
 		map <Esc>[23~ <F11>
 		map <Esc>[24~ <F12>
 endif
-set term=builtin_ansi
+" set term=builtin_ansi
 syntax on
 set backspace=2
 set exrc
@@ -86,6 +88,8 @@ set shiftwidth=4
 set cursorline
 set number
 set laststatus=2
+set mouse=a
+" set scrolloff=3
 augroup project
     autocmd!
     autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
@@ -119,8 +123,6 @@ let g:ycm_semantic_triggers =  {
 
 
 
-
-
 " setup for syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -143,4 +145,3 @@ Glaive codefmt clang_format_style='google'
 let g:tex_flavor = 'latex'
 let g:vimtex_view_method = 'skim'
 nnoremap <C-P> :YcmCompleter GoTo<CR>
-let g:tq_python_version = 3
