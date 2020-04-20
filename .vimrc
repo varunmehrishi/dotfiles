@@ -47,6 +47,7 @@ Plugin 'tmhedberg/simpylfold'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'terryma/vim-expand-region'
 Plugin 'junegunn/fzf.vim'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 call glaive#Install()
