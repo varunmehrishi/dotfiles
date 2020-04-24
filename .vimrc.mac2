@@ -1,0 +1,169 @@
+filetype off                  " required
+
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+" Make sure you use single quotes
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plug 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+" Plug 'L9'
+" Git plugin not hosted on GitHub
+" Plug 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plug 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"
+" Avoid a name conflict with L9
+Plug 'Valloric/YouCompleteMe'
+Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdtree'
+" Plug 'w0rp/ale'
+" Plug 'tpope/commentary.vim'
+" Add commentary manually
+" Plug 'rhysd/vim-clang-format'
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+Plug 'google/vim-glaive'
+Plug 'lervag/vimtex'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'itchyny/lightline.vim'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'dracula/vim'
+Plug 'jeetsukumaran/vim-indentwise'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'tmhedberg/simpylfold'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'terryma/vim-expand-region'
+Plug 'thinca/vim-visualstar'
+Plug 'chrisbra/NrrwRgn'
+Plug 'obreitwi/vim-sort-folds'
+Plug 'easymotion/vim-easymotion'
+Plug 'inkarkat/vim-ingo-library'
+Plug 'inkarkat/vim-mark'
+" All of your Plugins must be added before the following line
+call plug#end()            " required
+call glaive#Install()
+
+set autoindent
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+if has('mac') && ($TERM == 'xterm-256color' || $TERM == 'screen-256color')
+		map <Esc>OP <F1>
+		map <Esc>OQ <F2>
+		map <Esc>OR <F3>
+		map <Esc>OS <F4>
+		map <Esc>[16~ <F5>
+		map <Esc>[17~ <F6>
+		map <Esc>[18~ <F7>
+		map <Esc>[19~ <F8>
+		map <Esc>[20~ <F9>
+		map <Esc>[21~ <F10>
+		map <Esc>[23~ <F11>
+		map <Esc>[24~ <F12>
+endif
+" set term=builtin_ansi
+syntax on
+set backspace=2
+set exrc
+set secure
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set cursorline
+set number
+set laststatus=2
+set mouse=a
+" set scrolloff=3
+augroup project
+    autocmd!
+    autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
+augroup END
+set t_Co=256
+autocmd FileType c,cpp setlocal expandtab shiftwidth=2 softtabstop=2 cindent 
+autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4 autoindent
+" set background=dark
+color dracula
+" highlight Normal ctermbg=NONE
+" highlight nonText ctermbg=NONE
+" highlight Pmenu ctermfg=10 ctermbg=128 guifg=#000000 guibg=#0000ff
+map <C-l> :NERDTreeToggle<CR>
+
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+" nmap s <Plug>(easymotion-overwin-f)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Turn on case-insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
+let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
+let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf.py"
+" let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/examples/.ycm_extra_conf.py'
+let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
+" let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
+let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
+let g:ycm_complete_in_comments = 1 " Completion in comments
+let g:ycm_complete_in_strings = 1 " Completion in string
+let g:ycm_autoclose_preview_window_after_completion = 0
+let g:ycm_autoclose_preview_window_after_insertion = 0
+let g:ycm_python_binary_path = '/usr/local/bin/python3'
+let g:ycm_semantic_triggers =  {
+  \ 'c' : ['re!\w{2}'],
+  \ 'cpp' : ['re!\w{2}'],
+  \ 'python' : ['re!\w{2}'],
+  \ }
+
+
+
+" setup for syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers = ['flake8']
+
+" autoformat
+augroup autoformat_settings
+  autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+  autocmd FileType python AutoFormatBuffer yapf
+augroup END
+" use google style for clang-format
+Glaive codefmt clang_format_style='google' 
+
+" let g:clang_format#code_style='google' 
+let g:tex_flavor = 'latex'
+let g:vimtex_view_method = 'skim'
+nnoremap <C-P> :YcmCompleter GoTo<CR>
+
+com! FormatJSON %!python -m json.tool
