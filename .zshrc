@@ -1,12 +1,11 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/varunmehrishi/.oh-my-zsh
-
+# export FZF_BASE=/usr/local/bin/fzf
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="dracula"
-
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -49,7 +48,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(fzf git osx vi-mode)
 
 # User configuration
 
@@ -86,6 +85,13 @@ eval "$(thefuck --alias)"
 # You can use whatever you want as an alias, like for Mondays:
 eval "$(thefuck --alias FUCK)"
 
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+
 alias chandroid='cd ~/Library/Android/sdk/platform-tools'
 alias adb='~/Library/Android/sdk/platform-tools/adb'
 alias fastboot='~/Library/Android/sdk/platform-tools/fastboot'
@@ -104,3 +110,21 @@ export PATH="/usr/local/opt/llvm/bin:$PATH"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#
+# start typing + [Up-Arrow] - fuzzy find history forward
+if [[ "${terminfo[kcuu1]}" != "" ]]; then
+  autoload -U up-line-or-beginning-search
+  zle -N up-line-or-beginning-search
+  bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search
+fi
+# start typing + [Down-Arrow] - fuzzy find history backward
+if [[ "${terminfo[kcud1]}" != "" ]]; then
+  autoload -U down-line-or-beginning-search
+  zle -N down-line-or-beginning-search
+  bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
+fi
+ 
+source /Users/varunmehrishi/Library/Preferences/org.dystroy.broot/launcher/bash/br
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
