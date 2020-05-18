@@ -48,6 +48,11 @@ Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'terryma/vim-expand-region'
 Plugin 'junegunn/fzf.vim'
 Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'godlygeek/tabular'
+Plugin 'tommcdo/vim-exchange'
+Plugin 'argtextobj.vim'
+Plugin 'kana/vim-textobj-user'
+Plugin 'kana/vim-textobj-entire'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 call glaive#Install()
