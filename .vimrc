@@ -104,11 +104,13 @@ set t_Co=256
 autocmd FileType c,cpp setlocal expandtab shiftwidth=2 softtabstop=2 cindent 
 autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4 autoindent
 " set background=dark
+let g:dracula_italic=0
 color dracula
 " highlight Normal ctermbg=NONE
 " highlight nonText ctermbg=NONE
 " highlight Pmenu ctermfg=10 ctermbg=128 guifg=#000000 guibg=#0000ff
 map <C-l> :NERDTreeToggle<CR>
+
 
 let g:ycm_server_python_interpreter = '/usr/local/bin/python'
 let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf.py"

@@ -52,7 +52,7 @@ plugins=(fzf git osx vi-mode)
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/Cellar/cling/0.5_1/libexec/bin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -60,12 +60,7 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+export EDITOR='vim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -92,12 +87,19 @@ if type brew &>/dev/null; then
   compinit
 fi
 
-alias chandroid='cd ~/Library/Android/sdk/platform-tools'
-alias adb='~/Library/Android/sdk/platform-tools/adb'
-alias fastboot='~/Library/Android/sdk/platform-tools/fastboot'
-alias feb='cd ~/Desktop/voc/February'
+alias -s {ape,avi,flv,m4a,mkv,mov,mp3,mp4,mpeg,mpg,ogg,ogm,wav,webm}=mpv
+alias -s {c,cpp,txt,py,java,sc,json}=vim
+
+alias -g C='| pbcopy'
+alias -g F='| fzf'
+alias -g G='| grep'
+alias -g L='| less'
+alias -g R='| rg'
+alias -g V='| vim -'
+
 alias dcstart='sudo ~/DCrypt/macos/dnscrypt-proxy -service start && sudo networksetup -switchtolocation "DNSCryp"'
 alias dcstop='sudo ~/DCrypt/macos/dnscrypt-proxy -service stop && sudo networksetup -switchtolocation "Automatic"'
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export PATH="/usr/local/sbin:$PATH"
@@ -125,6 +127,9 @@ if [[ "${terminfo[kcud1]}" != "" ]]; then
   zle -N down-line-or-beginning-search
   bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
 fi
- 
+
+# Load rupa's z 
+source /usr/local/etc/profile.d/z.sh
+
 source /Users/varunmehrishi/Library/Preferences/org.dystroy.broot/launcher/bash/br
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
