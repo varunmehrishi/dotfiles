@@ -42,7 +42,7 @@ HEADER_EXTENSIONS = [
 
 HEADER_DIRECTORIES = [
         'include',
-        '/usr/local/Cellar/python3/3.7.0/Frameworks/Python.framework/Versions/3.7/Headers'
+        '/usr/local/Cellar/python@3.9/3.9.1/Frameworks/Python.framework/Headers'
         ]
 
 BUILD_DIRECTORY = 'build';

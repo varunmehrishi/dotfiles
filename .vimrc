@@ -112,7 +112,7 @@ color dracula
 map <C-l> :NERDTreeToggle<CR>
 
 
-let g:ycm_server_python_interpreter = '/usr/local/bin/python'
+let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
 let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf.py"
 " let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/examples/.ycm_extra_conf.py'
 let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
@@ -122,7 +122,7 @@ let g:ycm_complete_in_comments = 1 " Completion in comments
 let g:ycm_complete_in_strings = 1 " Completion in string
 let g:ycm_autoclose_preview_window_after_completion = 0
 let g:ycm_autoclose_preview_window_after_insertion = 0
-let g:ycm_python_binary_path = '/usr/local/bin/python'
+let g:ycm_python_binary_path = '/usr/local/bin/python3'
 let g:ycm_semantic_triggers =  {
   \ 'c' : ['re!\w{2}'],
   \ 'cpp' : ['re!\w{2}'],

@@ -48,7 +48,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(fzf git osx vi-mode)
+plugins=(fzf git osx)
 
 # User configuration
 
@@ -133,3 +133,8 @@ source /usr/local/etc/profile.d/z.sh
 
 source /Users/varunmehrishi/Library/Preferences/org.dystroy.broot/launcher/bash/br
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# export NVM_LAZY_LOAD=true
+# export NVM_COMPLETION=true
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
