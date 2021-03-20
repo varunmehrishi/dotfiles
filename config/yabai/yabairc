@@ -43,7 +43,7 @@ yabai -m config window_gap                   10
 
 # specific space settings
 # yabai -m config --space mail  layout        stack
-# yabai -m config --space games layout        float
+yabai -m config --space 3 layout float
 
 # window rules
 # yabai -m rule --add app="^Mail$" space=mail
@@ -55,6 +55,7 @@ yabai -m config window_gap                   10
 # yabai -m rule --add app="^Discord$" space=social grid=1:1:0:0:1:1 manage=off
 # yabai -m rule --add app="^Steam$" space=games manage=off
 yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^Kodi$" manage=off
 
 # signals
 yabai -m signal --add event=window_destroyed active=yes action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse &> /dev/null || yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id) &> /dev/null"
