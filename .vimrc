@@ -1,61 +1,72 @@
-filetype off                  " required
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
 
-" set the runtime path to include Vundle and initialize
-set rtp+=/usr/local/opt/fzf
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+" Plug 'jeetsukumaran/vim-indentwise'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'obreitwi/vim-sort-folds'
+" Plug 'paulhybryant/foldcol'
+" Plug 'pseewald/vim-anyfold'
+" Plug 'terryma/vim-expand-region'
+" Plug 'tmhedberg/simpylfold'
+" Plug 'vim-scripts/argtextobj.vim'
+" Plug 'vim-scripts/indentpython.vim'
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+Plug 'dracula/vim'
+Plug 'chrisbra/NrrwRgn'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'easymotion/vim-easymotion'
+Plug 'godlygeek/tabular'
+Plug 'google/vim-codefmt'
+Plug 'google/vim-glaive'
+Plug 'google/vim-maktaba'
+Plug 'inkarkat/vim-ingo-library'
+Plug 'inkarkat/vim-mark'
+Plug 'itchyny/lightline.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'"
+Plug 'kana/vim-textobj-entire'
+Plug 'kana/vim-textobj-user'
+Plug 'mechatroner/rainbow_csv'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'scrooloose/nerdtree'
+Plug 'thinca/vim-visualstar'
+Plug 'tommcdo/vim-exchange'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-jdaddy'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'vim-scripts/AdvancedSorters'
+Plug 'wellle/targets.vim'
+Plug 'rust-lang/rust.vim'
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-Plugin 'L9'
-" Git plugin not hosted on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/syntastic'
-Plugin 'scrooloose/nerdtree'
-" Plugin 'w0rp/ale'
-Plugin 'tpope/commentary.vim'
-" Plugin 'rhysd/vim-clang-format'
-Plugin 'google/vim-maktaba'
-Plugin 'google/vim-codefmt'
-Plugin 'google/vim-glaive'
+if has('nvim')
+    Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+    " Plug 'glepnir/lspsaga.nvim'
+    Plug 'ray-x/lsp_signature.nvim'
+    Plug 'hrsh7th/nvim-compe'
+    Plug 'lewis6991/gitsigns.nvim'
+    Plug 'metakirby5/codi.vim'
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-lua/popup.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  
+    Plug 'ray-x/lsp_signature.nvim'
+    Plug 'simrat39/rust-tools.nvim'
+    " Plug 'simrat39/symbols-outline.nvim'
+    Plug 'mfussenegger/nvim-jdtls'
+endif
 
-Plugin 'lervag/vimtex'
-Bundle 'ron89/thesaurus_query.vim'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'itchyny/lightline.vim'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'dracula/vim'
-Plugin 'jeetsukumaran/vim-indentwise'
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'tmhedberg/simpylfold'
-Plugin 'michaeljsmith/vim-indent-object'
-Plugin 'terryma/vim-expand-region'
-Plugin 'junegunn/fzf.vim'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'godlygeek/tabular'
-Plugin 'tommcdo/vim-exchange'
-Plugin 'argtextobj.vim'
-Plugin 'kana/vim-textobj-user'
-Plugin 'kana/vim-textobj-entire'
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
+call plug#end()            " required
 call glaive#Install()
+
 set autoindent
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
@@ -95,6 +106,7 @@ set cursorline
 set number
 set laststatus=2
 set mouse=a
+set foldlevel=99
 " set scrolloff=3
 augroup project
     autocmd!
@@ -102,8 +114,21 @@ augroup project
 augroup END
 set t_Co=256
 autocmd FileType c,cpp setlocal expandtab shiftwidth=2 softtabstop=2 cindent 
+autocmd FileType vim setlocal expandtab shiftwidth=2 softtabstop=2 cindent 
 autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4 autoindent
+
+" Anyfold (anyfold) ------------------------------------------------------
+" {{{"
+" autocmd Filetype java AnyFoldActivate  " turn this on for Java"
+" autocmd Filetype scala AnyFoldActivate " turn this on for Scala"
+" " ------------------------------------------------------------------------
+" }}}"
+
 " set background=dark
+
+let mapleader = "\<Space>"
+
+
 let g:dracula_italic=0
 color dracula
 " highlight Normal ctermbg=NONE
@@ -111,45 +136,73 @@ color dracula
 " highlight Pmenu ctermfg=10 ctermbg=128 guifg=#000000 guibg=#0000ff
 map <C-l> :NERDTreeToggle<CR>
 
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Todo', 'border': 'sharp' } }
 
-let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
-let g:ycm_global_ycm_extra_conf = "~/.ycm_extra_conf.py"
-" let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/examples/.ycm_extra_conf.py'
-let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
-" let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
-let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
-let g:ycm_complete_in_comments = 1 " Completion in comments
-let g:ycm_complete_in_strings = 1 " Completion in string
-let g:ycm_autoclose_preview_window_after_completion = 0
-let g:ycm_autoclose_preview_window_after_insertion = 0
-let g:ycm_python_binary_path = '/usr/local/bin/python3'
-let g:ycm_semantic_triggers =  {
-  \ 'c' : ['re!\w{2}'],
-  \ 'cpp' : ['re!\w{2}'],
-  \ 'python' : ['re!\w{2}'],
-  \ }
+let g:EasyMotion_do_mapping = 1 " Disable default mappings
 
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+" nmap s <Plug>(easymotion-overwin-f)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap s <Plug>(easymotion-overwin-f2)
 
+" Turn on case-insensitive feature
+let g:EasyMotion_smartcase = 1
 
-" setup for syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ['flake8']
+nmap <leader>gf :diffget //2<CR>
+nmap <leader>gj :diffget //3<CR>
+nmap <leader>p :GFiles<CR>
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
+let g:targets_nl = 'nl'
+
+let g:table_mode_corner_corner='+'
+let g:table_mode_header_fillchar='='
 
 " autoformat
 augroup autoformat_settings
-  autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+  autocmd FileType bzl AutoFormatBuffer buildifier
+  autocmd FileType c,cpp,proto,arduino AutoFormatBuffer clang-format
+  autocmd FileType dart AutoFormatBuffer dartfmt
+  autocmd FileType go AutoFormatBuffer gofmt
+  autocmd FileType gn AutoFormatBuffer gn
+  autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
+  " autocmd FileType java AutoFormatBuffer google-java-format
   autocmd FileType python AutoFormatBuffer yapf
+  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+  autocmd FileType rust AutoFormatBuffer rustfmt
+  autocmd FileType javascript,typescript,vue AutoFormatBuffer prettier
 augroup END
+
 " use google style for clang-format
 Glaive codefmt clang_format_style='google' 
-
+Glaive codefmt google_java_executable="java -jar /Users/mehrish/Developer/Formatter/google-java-format-1.3-all-deps.jar"
 " let g:clang_format#code_style='google' 
-let g:tex_flavor = 'latex'
-let g:vimtex_view_method = 'skim'
-nnoremap <C-P> :YcmCompleter GoTo<CR>
+" let g:tex_flavor = 'latex'
+" let g:vimtex_view_method = 'skim'
+" nnoremap <C-P> :YcmCompleter GoTo<CR>
+
+" max colors for mark plugin
+let g:mwDefaultHighlightingPalette = 'maximum'
+
+let g:codi#interpreters = {
+   \ 'python': {
+       \ 'bin': 'python3',
+       \ 'prompt': '^\(>>>\|\.\.\.\) ',
+       \ },
+   \ }
+
+com! FormatJSON %!python -m json.tool
+
+set hidden
+set nobackup                  " Remove them pesky .swp files"
+set nowritebackup
+set updatetime=300            " ...so screen draws don't lag"
+set shortmess+=c              " Don't pass messages to |ins-completion-menu|"
+set signcolumn=yes            " Always show signedcolumn"
+

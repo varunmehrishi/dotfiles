@@ -1,0 +1,1 @@
+/Users/mehrish/Developer/MehrishScripts/dotfiles/.config/nvim/init.vim
