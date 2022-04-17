@@ -1,9 +1,11 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+export ZPLUG_HOME=/opt/homebrew/opt/zplug
+source $ZPLUG_HOME/init.zsh
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/mehrish/.oh-my-zsh"
-source ~/.zplug/init.zsh
+export ZSH="$HOME/.oh-my-zsh"
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -118,6 +120,7 @@ alias gd='git delta'
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
+alias vimdiff='nvim -d'
 alias ls='exa'
 alias ll='exa -l'
 alias la='exa -al'
@@ -161,7 +164,6 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 bindkey "ç" fzf-cd-widget
 
 eval "$(zoxide init zsh)"
-source /Users/mehrish/Library/Preferences/org.dystroy.broot/launcher/bash/br
 # eval "$(fnm env --shell=zsh)"
 eval "$(starship init zsh)"
 
