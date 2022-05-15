@@ -1,0 +1,5 @@
+require('vrnm.options')
+require('vrnm.keymaps')
+require('vrnm.plugins')
+require('vrnm.treesitter')
+require('vrnm.cmp')

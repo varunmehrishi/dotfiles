@@ -1,0 +1,79 @@
+-- This file can be loaded by calling `lua require('plugins')` from your init.vim
+
+-- Only required if you have packer configured as `opt`
+-- vim.cmd [[packadd packer.nvim]]
+
+return require('packer').startup(function()
+  -- Packer can manage itself
+  use 'wbthomason/packer.nvim'
+
+  -- Post-install/update hook with neovim command
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+
+  -- Post-install/update hook with call of vimscript function with argument
+  use { 'glacambre/firenvim', run = function() vim.fn['firenvim#install'](0) end }
+
+  -- Use dependency and run lua function after load
+  use {
+    'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' },
+    config = function() require('gitsigns').setup() end
+  }
+
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
+  }
+
+  use { 'junegunn/fzf', run = ":call fzf#install()" }
+  use 'junegunn/fzf.vim'
+
+  -- cmp plugins
+  use 'hrsh7th/nvim-cmp' -- The completion plugin
+  use 'hrsh7th/cmp-buffer' -- buffer completions
+  use 'hrsh7th/cmp-path' -- path completions
+  use 'hrsh7th/cmp-cmdline' -- cmdline completions
+  use 'saadparwaiz1/cmp_luasnip' -- snippet completions
+
+  -- snippets
+  use 'L3MON4D3/LuaSnip' --snippet engine
+  use 'rafamadriz/friendly-snippets' -- a bunch of snippets to use
+
+  use 'neovim/nvim-lspconfig'
+  -- You can specify multiple plugins in a single call
+  use {'tjdevries/colorbuddy.vim' }
+
+  -- You can alias plugin names
+  use {'dracula/vim', as = 'dracula', config = function() vim.cmd [[colorscheme dracula]] end}
+
+  use 'inkarkat/vim-ingo-library'
+  use 'inkarkat/vim-mark'
+
+  use 'mechatroner/rainbow_csv'
+
+  use 'thinca/vim-visualstar'
+  use 'tommcdo/vim-exchange'
+  
+  -- tpope plugins
+  use 'tpope/vim-abolish'
+  use 'tpope/vim-eunuch'
+  use 'tpope/vim-fugitive'
+  use 'tpope/vim-jdaddy'
+  use 'tpope/vim-repeat'
+  use 'tpope/vim-speeddating'
+  use 'tpope/vim-surround'
+  use 'tpope/vim-unimpaired'
+
+  -- Sort Lines
+  use 'vim-scripts/AdvancedSorters'
+
+  -- Test Objects
+  use { 'kana/vim-textobj-entire', requires = { 'kana/vim-textobj-user'} }
+  use 'wellle/targets.vim'
+ 
+  -- Telescope
+  use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim'} }
+  -- multiple cursors
+  use { 'mg979/vim-visual-multi', branch = 'master' } 
+end)
