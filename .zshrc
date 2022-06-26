@@ -168,3 +168,4 @@ eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
