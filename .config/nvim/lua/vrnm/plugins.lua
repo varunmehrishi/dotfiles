@@ -3,7 +3,7 @@
 -- Only required if you have packer configured as `opt`
 -- vim.cmd [[packadd packer.nvim]]
 
-return require('packer').startup(function()
+return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
@@ -22,7 +22,7 @@ return require('packer').startup(function()
   use {
     'numToStr/Comment.nvim',
     config = function()
-        require('Comment').setup()
+      require('Comment').setup()
     end
   }
 
@@ -41,17 +41,24 @@ return require('packer').startup(function()
   use 'L3MON4D3/LuaSnip' --snippet engine
   use 'rafamadriz/friendly-snippets' -- a bunch of snippets to use
 
-    -- LSP
+  -- LSP
   use "neovim/nvim-lspconfig" -- enable LSP
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
 
   -- You can specify multiple plugins in a single call
-  use {'tjdevries/colorbuddy.vim' }
+  use { 'tjdevries/colorbuddy.vim' }
 
   -- You can alias plugin names
-  use {'dracula/vim', as = 'dracula', config = function() vim.cmd [[colorscheme dracula]] end}
+  use { 'dracula/vim', as = 'dracula', config = function() vim.cmd [[colorscheme dracula]] end }
+  use {
+    'nvim-lualine/lualine.nvim',
+    config = function()
+      require('lualine').setup({ options = { theme = 'dracula' } })
+    end,
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
 
   use 'inkarkat/vim-ingo-library'
   use 'inkarkat/vim-mark'
@@ -60,7 +67,7 @@ return require('packer').startup(function()
 
   use 'thinca/vim-visualstar'
   use 'tommcdo/vim-exchange'
-  
+
   -- tpope plugins
   use 'tpope/vim-abolish'
   use 'tpope/vim-eunuch'
@@ -75,11 +82,11 @@ return require('packer').startup(function()
   use 'vim-scripts/AdvancedSorters'
 
   -- Test Objects
-  use { 'kana/vim-textobj-entire', requires = { 'kana/vim-textobj-user'} }
+  use { 'kana/vim-textobj-entire', requires = { 'kana/vim-textobj-user' } }
   use 'wellle/targets.vim'
- 
+
   -- Telescope
-  use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim'} }
+  use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   -- multiple cursors
-  use { 'mg979/vim-visual-multi', branch = 'master' } 
+  use { 'mg979/vim-visual-multi', branch = 'master' }
 end)
