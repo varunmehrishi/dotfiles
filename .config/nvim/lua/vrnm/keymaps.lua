@@ -28,3 +28,4 @@ vim.keymap.set('n', '<S-Right>', ':vertical resize +2<CR>', opts)
 -- Navigate buffers
 vim.keymap.set('n', '<S-l>', ':bnext<CR>', opts)
 vim.keymap.set('n', '<S-h>', ':bprevious<CR>', opts)
+vim.keymap.set('n', '<S-d>', ':bdelete<CR>', opts)

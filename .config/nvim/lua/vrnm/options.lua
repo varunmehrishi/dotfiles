@@ -16,7 +16,7 @@ local options = {
   writebackup = false,                     -- write backup
 }
 
-for k, v in pairs(options) do 
+for k, v in pairs(options) do
   vim.opt[k] = v
 end
 

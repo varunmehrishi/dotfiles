@@ -61,6 +61,11 @@ return require('packer').startup(function(use)
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
 
+  use {
+    'j-hui/fidget.nvim',
+    config = function() require('fidget').setup() end,
+  }
+
   use 'inkarkat/vim-ingo-library'
   use 'inkarkat/vim-mark'
 
