@@ -98,4 +98,6 @@ return require('packer').startup(function(use)
   use {'nvim-telescope/telescope-ui-select.nvim' }
   -- multiple cursors
   use { 'mg979/vim-visual-multi', branch = 'master' }
+
+  use 'ojroques/nvim-osc52'
 end)

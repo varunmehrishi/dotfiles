@@ -29,3 +29,7 @@ vim.keymap.set('n', '<S-Right>', ':vertical resize +2<CR>', opts)
 vim.keymap.set('n', '<S-l>', ':bnext<CR>', opts)
 vim.keymap.set('n', '<S-h>', ':bprevious<CR>', opts)
 vim.keymap.set('n', '<S-d>', ':bdelete<CR>', opts)
+
+vim.keymap.set('n', '<leader>y', require('osc52').copy_operator, {expr = true})
+vim.keymap.set('n', '<leader>yy', '<leader>y_', {remap = true})
+vim.keymap.set('x', '<leader>y', require('osc52').copy_visual)
