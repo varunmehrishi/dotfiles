@@ -30,6 +30,9 @@ vim.keymap.set('n', '<S-l>', ':bnext<CR>', opts)
 vim.keymap.set('n', '<S-h>', ':bprevious<CR>', opts)
 vim.keymap.set('n', '<S-d>', ':bdelete<CR>', opts)
 
-vim.keymap.set('n', '<leader>y', require('osc52').copy_operator, {expr = true})
-vim.keymap.set('n', '<leader>yy', '<leader>y_', {remap = true})
-vim.keymap.set('x', '<leader>y', require('osc52').copy_visual)
+local osc_status, osc52 = pcall(require, 'osc52')
+if osc_status then
+  vim.keymap.set('n', '<leader>y', osc52.copy_operator, {expr = true})
+  vim.keymap.set('n', '<leader>yy', '<leader>y_', {remap = true})
+  vim.keymap.set('x', '<leader>y', osc52.copy_visual)
+end
