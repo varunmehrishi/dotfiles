@@ -44,7 +44,8 @@ return require('packer').startup(function(use)
 
   -- LSP
   use "neovim/nvim-lspconfig" -- enable LSP
-  use "williamboman/nvim-lsp-installer" -- simple to use language server installer
+  use "williamboman/mason.nvim" -- simple to use language server installer
+  use "williamboman/mason-lspconfig.nvim" -- simple to use language server installer
   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
 
@@ -66,6 +67,7 @@ return require('packer').startup(function(use)
     config = function() require('fidget').setup() end,
   }
 
+  use 'RRethy/vim-illuminate' -- illuminate word under cursor for lsp enabled buffers
   use 'inkarkat/vim-ingo-library'
   use 'inkarkat/vim-mark'
 
@@ -93,6 +95,7 @@ return require('packer').startup(function(use)
 
   -- Telescope
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
+  use {'nvim-telescope/telescope-ui-select.nvim' }
   -- multiple cursors
   use { 'mg979/vim-visual-multi', branch = 'master' }
 end)

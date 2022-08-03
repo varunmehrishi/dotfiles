@@ -15,8 +15,8 @@ null_ls.setup({
 		formatting.black.with({ extra_args = { "--fast" } }),
 		formatting.stylua,
     formatting.rustfmt,
-    formatting.clang_format,
+    -- formatting.clang_format,
     diagnostics.flake8,
-    diagnostics.cppcheck,
+    -- diagnostics.cppcheck,
 	},
 })

@@ -1,4 +1,17 @@
-local status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
+local status_ok, mason = pcall(require, "mason")
+if not status_ok then
+  return
+end
+
+mason.setup {
+  ui = {
+    icons = {
+      package_installed = "✓"
+    }
+  }
+}
+
+local status_ok, lsp_installer = pcall(require, "mason-lspconfig")
 if not status_ok then
   return
 end
