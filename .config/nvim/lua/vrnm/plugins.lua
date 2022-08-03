@@ -96,8 +96,11 @@ return require('packer').startup(function(use)
   -- Telescope
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   use {'nvim-telescope/telescope-ui-select.nvim' }
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   -- multiple cursors
+  --
   use { 'mg979/vim-visual-multi', branch = 'master' }
 
   use 'ojroques/nvim-osc52'
+  use 'hlucco/nvim-eswpoch'
 end)

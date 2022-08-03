@@ -184,6 +184,11 @@ _G.packer_plugins = {
     path = "/Users/varunmehrishi/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
   },
+  ["nvim-eswpoch"] = {
+    loaded = true,
+    path = "/Users/varunmehrishi/.local/share/nvim/site/pack/packer/start/nvim-eswpoch",
+    url = "https://github.com/hlucco/nvim-eswpoch"
+  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/Users/varunmehrishi/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
@@ -228,6 +233,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/varunmehrishi/.local/share/nvim/site/pack/packer/start/targets.vim",
     url = "https://github.com/wellle/targets.vim"
+  },
+  ["telescope-fzf-native.nvim"] = {
+    loaded = true,
+    path = "/Users/varunmehrishi/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",
+    url = "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
   },
   ["telescope-ui-select.nvim"] = {
     loaded = true,
@@ -330,18 +340,18 @@ time([[Config for lualine.nvim]], false)
 time([[Config for Comment.nvim]], true)
 try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fComment\frequire\0", "config", "Comment.nvim")
 time([[Config for Comment.nvim]], false)
--- Config for: fidget.nvim
-time([[Config for fidget.nvim]], true)
-try_loadstring("\27LJ\2\n4\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\vfidget\frequire\0", "config", "fidget.nvim")
-time([[Config for fidget.nvim]], false)
--- Config for: gitsigns.nvim
-time([[Config for gitsigns.nvim]], true)
-try_loadstring("\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
-time([[Config for gitsigns.nvim]], false)
 -- Config for: dracula
 time([[Config for dracula]], true)
 try_loadstring("\27LJ\2\n7\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\24colorscheme dracula\bcmd\bvim\0", "config", "dracula")
 time([[Config for dracula]], false)
+-- Config for: gitsigns.nvim
+time([[Config for gitsigns.nvim]], true)
+try_loadstring("\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
+time([[Config for gitsigns.nvim]], false)
+-- Config for: fidget.nvim
+time([[Config for fidget.nvim]], true)
+try_loadstring("\27LJ\2\n4\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\vfidget\frequire\0", "config", "fidget.nvim")
+time([[Config for fidget.nvim]], false)
 if should_profile then save_profiles() end
 
 end)
