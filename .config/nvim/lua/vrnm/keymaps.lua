@@ -30,6 +30,8 @@ vim.keymap.set('n', '<S-l>', ':bnext<CR>', opts)
 vim.keymap.set('n', '<S-h>', ':bprevious<CR>', opts)
 vim.keymap.set('n', '<S-d>', ':bdelete<CR>', opts)
 
+vim.keymap.set('n', '<leader>u', ':UndotreeToggle<CR>', opts)
+
 local osc_status, osc52 = pcall(require, 'osc52')
 if osc_status then
   vim.keymap.set('n', '<leader>y', osc52.copy_operator, {expr = true})
