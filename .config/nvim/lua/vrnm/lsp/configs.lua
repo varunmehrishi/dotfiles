@@ -11,8 +11,8 @@ mason.setup {
   }
 }
 
-local status_ok, lsp_installer = pcall(require, "mason-lspconfig")
-if not status_ok then
+local status_ok_lsp, lsp_installer = pcall(require, "mason-lspconfig")
+if not status_ok_lsp then
   return
 end
 
