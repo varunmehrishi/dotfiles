@@ -16,6 +16,8 @@ local options = {
   undodir = os.getenv('HOME') .. '/.undodir',  -- Add undodir for persistent undos
   undofile = true,                             -- enable persistent undos
   writebackup = false,                         -- write backup
+  guifont = {'FiraCode Nerd Font', ':h20'},    -- gui font for neovide gui
+  cmdheight = 0,                               -- no empty line at bottom waiting for command
 }
 
 for k, v in pairs(options) do

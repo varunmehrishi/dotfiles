@@ -89,7 +89,7 @@ return require("packer").startup(function(use)
 
 	use("mechatroner/rainbow_csv")
 
-	use("thinca/vim-visualstar")
+	-- use("thinca/vim-visualstar")
 	use("tommcdo/vim-exchange")
 
 	-- tpope plugins
