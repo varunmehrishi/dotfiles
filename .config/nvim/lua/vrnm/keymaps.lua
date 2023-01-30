@@ -33,9 +33,15 @@ vim.keymap.set('n', '<S-x>', ':cclose<CR>', opts)
 
 vim.keymap.set('n', '<leader>u', ':UndotreeToggle<CR>', opts)
 
+-- Git fugitive 3 way merge mappings
+vim.keymap.set('n', '<leader>gf', ':diffget //2<CR>', opts)
+vim.keymap.set('n', '<leader>gj', ':diffget //3<CR>', opts)
+
 local osc_status, osc52 = pcall(require, 'osc52')
 if osc_status then
   vim.keymap.set('n', '<leader>y', osc52.copy_operator, {expr = true})
   vim.keymap.set('n', '<leader>yy', '<leader>y_', {remap = true})
   vim.keymap.set('x', '<leader>y', osc52.copy_visual)
 end
+
+vim.keymap.set("n", "<leader>fml", "<cmd>CellularAutomaton make_it_rain<CR>")

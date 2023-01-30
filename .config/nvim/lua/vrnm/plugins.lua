@@ -136,4 +136,5 @@ return require("packer").startup(function(use)
 			require("leap").set_default_keymaps()
 		end,
 	})
+	use("eandrju/cellular-automaton.nvim")
 end)
