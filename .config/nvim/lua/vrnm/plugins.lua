@@ -78,6 +78,7 @@ return require("packer").startup(function(use)
 
 	use({
 		"j-hui/fidget.nvim",
+    tag = 'legacy',
 		config = function()
 			require("fidget").setup()
 		end,
@@ -118,7 +119,6 @@ return require("packer").startup(function(use)
 	--
 	use({ "mg979/vim-visual-multi", branch = "master" })
 
-	use("ojroques/nvim-osc52")
 	use("hlucco/nvim-eswpoch")
 	use({
 		"mbbill/undotree",
