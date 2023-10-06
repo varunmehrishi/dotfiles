@@ -41,4 +41,6 @@ vim.keymap.set('n', '<leader>y', '"*yiw', opts)
 vim.keymap.set('n', '<leader>yy', '"*yy', opts)
 vim.keymap.set('x', '<leader>y', '"*y', opts)
 
-vim.keymap.set("n", "<leader>fml", "<cmd>CellularAutomaton make_it_rain<CR>")
+vim.keymap.set('n', '<leader>fml', '<cmd>CellularAutomaton make_it_rain<CR>')
+
+vim.keymap.set('n', '<leader>t', ':Neotree toggle<CR>')
