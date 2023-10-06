@@ -26,10 +26,7 @@ local plugins = {
 	-- Use dependency and run lua function after load
 	{
 		"lewis6991/gitsigns.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("gitsigns").setup()
-		end,
+		dependencies = { "nvim-lua/plenary.nvim" }
 	},
 
 	{
