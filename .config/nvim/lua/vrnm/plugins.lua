@@ -1,126 +1,131 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
--- Only required if you have packer configured as `opt`
--- vim.cmd [[packadd packer.nvim]]
-
-return require("packer").startup(function(use)
-	-- Packer can manage itself
-	use("wbthomason/packer.nvim")
-
+local plugins = {
 	-- Post-install/update hook with neovim command
-	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
+	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 
 	-- Post-install/update hook with call of vimscript function with argument
-	use({
+	{
 		"glacambre/firenvim",
-		run = function()
+		build = function()
 			vim.fn["firenvim#install"](0)
 		end,
-	})
+	},
 
 	-- Use dependency and run lua function after load
-	use({
+	{
 		"lewis6991/gitsigns.nvim",
-		requires = { "nvim-lua/plenary.nvim" },
+		dependencies = { "nvim-lua/plenary.nvim" },
 		config = function()
 			require("gitsigns").setup()
 		end,
-	})
+	},
 
-	use({
+	{
 		"numToStr/Comment.nvim",
 		config = function()
 			require("Comment").setup()
 		end,
-	})
+	},
 
-	use({ "junegunn/fzf", run = ":call fzf#install()" })
-	use("junegunn/fzf.vim")
+	{ "junegunn/fzf", build = ":call fzf#install()" },
+	"junegunn/fzf.vim",
 
 	-- cmp plugins
-	use("hrsh7th/nvim-cmp") -- The completion plugin
-	use("hrsh7th/cmp-buffer") -- buffer completions
-	use("hrsh7th/cmp-path") -- path completions
-	use("hrsh7th/cmp-cmdline") -- cmdline completions
-	use("hrsh7th/cmp-nvim-lsp")
-	use("saadparwaiz1/cmp_luasnip") -- snippet completions
+	"hrsh7th/nvim-cmp", -- The completion plugin
+	"hrsh7th/cmp-buffer", -- buffer completions
+	"hrsh7th/cmp-path", -- path completions
+	"hrsh7th/cmp-cmdline", -- cmdline completions
+	"hrsh7th/cmp-nvim-lsp",
+	"saadparwaiz1/cmp_luasnip", -- snippet completions
 
 	-- snippets
-	use("L3MON4D3/LuaSnip") --snippet engine
-	use("rafamadriz/friendly-snippets") -- a bunch of snippets to use
-	use("simrat39/rust-tools.nvim")
+	"L3MON4D3/LuaSnip", --snippet engine
+	"rafamadriz/friendly-snippets", -- a bunch of snippets to use
+	"simrat39/rust-tools.nvim",
 
 	-- LSP
-	use("neovim/nvim-lspconfig") -- enable LSP
-	use("williamboman/mason.nvim") -- simple to use language server installer
-	use("williamboman/mason-lspconfig.nvim") -- simple to use language server installer
-	use("tamago324/nlsp-settings.nvim") -- language server settings defined in json for
-	use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
+	"neovim/nvim-lspconfig", -- enable LSP
+	"williamboman/mason.nvim", -- simple to use language server installer
+	"williamboman/mason-lspconfig.nvim", -- simple to use language server installer
+	"tamago324/nlsp-settings.nvim", -- language server settings defined in json for
+	"jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
 
 	-- You can specify multiple plugins in a single call
-	use({ "tjdevries/colorbuddy.vim" })
+	{ "tjdevries/colorbuddy.vim" },
 
 	-- You can alias plugin names
-	use({
+	{
 		"dracula/vim",
-		as = "dracula",
+		name = "dracula",
 		config = function()
 			vim.cmd([[colorscheme dracula]])
 		end,
-	})
-	use({
+	},
+	{
 		"nvim-lualine/lualine.nvim",
 		config = function()
 			require("lualine").setup({ options = { theme = "dracula" } })
 		end,
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
-	})
+		dependencies = { "kyazdani42/nvim-web-devicons", lazy = true },
+	},
 
-	use({
+	{
 		"j-hui/fidget.nvim",
     tag = 'legacy',
 		config = function()
 			require("fidget").setup()
 		end,
-	})
+	},
 
-	use("RRethy/vim-illuminate") -- illuminate word under cursor for lsp enabled buffers
-	use("inkarkat/vim-ingo-library")
-	use("inkarkat/vim-mark")
+	"RRethy/vim-illuminate", -- illuminate word under cursor for lsp enabled buffers
+	"inkarkat/vim-ingo-library",
+	"inkarkat/vim-mark",
 
-	use("mechatroner/rainbow_csv")
+	"mechatroner/rainbow_csv",
 
-	-- use("thinca/vim-visualstar")
-	use("tommcdo/vim-exchange")
+	-- "thinca/vim-visualstar",
+	"tommcdo/vim-exchange",
 
 	-- tpope plugins
-	use("tpope/vim-abolish")
-	use("tpope/vim-eunuch")
-	use("tpope/vim-fugitive")
-	use("tpope/vim-jdaddy")
-	use("tpope/vim-repeat")
-	use("tpope/vim-speeddating")
-	use("tpope/vim-surround")
-	use("tpope/vim-unimpaired")
+	"tpope/vim-abolish",
+	"tpope/vim-eunuch",
+	"tpope/vim-fugitive",
+	"tpope/vim-jdaddy",
+	"tpope/vim-repeat",
+	"tpope/vim-speeddating",
+	"tpope/vim-surround",
+	"tpope/vim-unimpaired",
 
 	-- Sort Lines
-	use("vim-scripts/AdvancedSorters")
+	"vim-scripts/AdvancedSorters",
 
 	-- Test Objects
-	use({ "kana/vim-textobj-entire", requires = { "kana/vim-textobj-user" } })
-	use("wellle/targets.vim")
+	{ "kana/vim-textobj-entire", dependencies = { "kana/vim-textobj-user" } },
+	"wellle/targets.vim",
 
 	-- Telescope
-	use({ "nvim-telescope/telescope.nvim", requires = { "nvim-lua/plenary.nvim" } })
-	use({ "nvim-telescope/telescope-file-browser.nvim" })
-	use({ "nvim-telescope/telescope-ui-select.nvim" })
-	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
+	{ "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+	{ "nvim-telescope/telescope-file-browser.nvim" },
+	{ "nvim-telescope/telescope-ui-select.nvim" },
+	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 	-- multiple cursors
 	--
-	use({ "mg979/vim-visual-multi", branch = "master" })
+	{ "mg979/vim-visual-multi", branch = "master" },
 
-	use("hlucco/nvim-eswpoch")
-	use({
+	"hlucco/nvim-eswpoch",
+	{
 		"mbbill/undotree",
 		config = function()
 			vim.cmd([[
@@ -129,12 +134,14 @@ return require("packer").startup(function(use)
                 endif
       ]])
 		end,
-	})
-	use({
+	},
+	{
 		"ggandor/leap.nvim",
 		config = function()
 			require("leap").set_default_keymaps()
 		end,
-	})
-	use("eandrju/cellular-automaton.nvim")
-end)
+	},
+	"eandrju/cellular-automaton.nvim",
+}
+
+require("lazy").setup(plugins, {})
