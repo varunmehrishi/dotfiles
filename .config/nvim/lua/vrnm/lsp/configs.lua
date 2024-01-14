@@ -16,6 +16,8 @@ if not status_ok_lsp then
   return
 end
 
+-- require('java').setup()
+
 local lspconfig = require("lspconfig")
 
 local servers = { "jsonls", "lua_ls", "rust_analyzer", "clangd", "tsserver", "yamlls"}
@@ -53,7 +55,7 @@ for _, server in pairs(servers) do
     keymap("n", "<leader>rss", "<cmd>RustSSR<Cr>", key_opts)
     keymap("n", "<leader>rxd", "<cmd>RustOpenExternalDocs<Cr>", key_opts)
 
-    require('rust-tools').setup({
+    vim.g.rustaceanvim = {
       tools = {
         on_initialized = function()
           vim.cmd [[
@@ -75,7 +77,7 @@ for _, server in pairs(servers) do
           }
         }
       }
-    })
+    }
     goto continue
   end
 

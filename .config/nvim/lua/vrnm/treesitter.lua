@@ -1,4 +1,4 @@
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
   ensure_installed = { "c", "cpp", "java", "json", "lua", "python", "rust", "typescript" },
 
@@ -7,6 +7,11 @@ require'nvim-treesitter.configs'.setup {
 
   -- List of parsers to ignore installing (for "all")
   ignore_install = {},
+
+  indent = {
+    enable = true
+  },
+
 
   highlight = {
     -- `false` will disable the whole extension

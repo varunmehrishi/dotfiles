@@ -33,7 +33,9 @@ vim.keymap.set('n', '<S-x>', ':cclose<CR>', opts)
 
 vim.keymap.set('n', '<leader>u', ':UndotreeToggle<CR>', opts)
 
--- Git fugitive 3 way merge mappings
+-- Git fugitive
+vim.keymap.set('n', '<leader>gg', ':G<CR>', opts)
+-- fugitive 3 way merge mappings
 vim.keymap.set('n', '<leader>gf', ':diffget //2<CR>', opts)
 vim.keymap.set('n', '<leader>gj', ':diffget //3<CR>', opts)
 
@@ -43,4 +45,4 @@ vim.keymap.set('x', '<leader>y', '"*y', opts)
 
 vim.keymap.set('n', '<leader>fml', '<cmd>CellularAutomaton make_it_rain<CR>')
 
-vim.keymap.set('n', '<leader>t', ':Neotree toggle<CR>')
+vim.keymap.set('n', '<leader>tt', ':Neotree toggle<CR>')

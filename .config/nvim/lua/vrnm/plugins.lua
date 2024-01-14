@@ -26,7 +26,7 @@ local plugins = {
 	-- Use dependency and run lua function after load
 	{
 		"lewis6991/gitsigns.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" }
+		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 
 	{
@@ -51,8 +51,12 @@ local plugins = {
 	"L3MON4D3/LuaSnip", --snippet engine
 	"rafamadriz/friendly-snippets", -- a bunch of snippets to use
 
-	--rust tools
-	"simrat39/rust-tools.nvim",
+	--rust tools -> rustaceanvim
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^3", -- Recommended
+    ft = { "rust" },
+  },
 
 	-- LSP
 	"neovim/nvim-lspconfig", -- enable LSP
@@ -121,7 +125,7 @@ local plugins = {
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 	-- multiple cursors
 	--
-	{ "mg979/vim-visual-multi", branch = "master" },
+	-- { "mg979/vim-visual-multi", branch = "master" },
 
 	"hlucco/nvim-eswpoch",
 	{
@@ -149,6 +153,35 @@ local plugins = {
 			"MunifTanjim/nui.nvim",
 		},
 	},
+	{
+		"Wansmer/treesj",
+		-- keys = { "<space>tm", "<space>tj", "<space>ts" },
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		config = function()
+			require("treesj").setup({ use_default_keymaps = false })
+		end,
+	},
+	-- {
+	-- 	"nvim-java/nvim-java",
+	-- 	dependencies = {
+	-- 		"nvim-java/lua-async-await",
+	-- 		"nvim-java/nvim-java-core",
+	-- 		"nvim-java/nvim-java-test",
+	-- 		"nvim-java/nvim-java-dap",
+	-- 		"MunifTanjim/nui.nvim",
+	-- 		"neovim/nvim-lspconfig",
+	-- 		"mfussenegger/nvim-dap",
+	-- 		{
+	-- 			"williamboman/mason.nvim",
+	-- 			opts = {
+	-- 				registries = {
+	-- 					"github:nvim-java/mason-registry",
+	-- 					"github:mason-org/mason-registry",
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
 }
 
 require("lazy").setup(plugins, {})

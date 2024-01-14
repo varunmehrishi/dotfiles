@@ -121,9 +121,9 @@ alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
 alias vimdiff='nvim -d'
-alias ls='exa'
-alias ll='exa -l'
-alias la='exa -al'
+alias ls='eza'
+alias ll='eza -l'
+alias la='eza -al'
 alias cat='bat'
 
 alias -s {ape,avi,flv,m4a,mkv,mov,mp3,mp4,mpeg,mpg,ogg,ogm,wav,webm}=mpv
