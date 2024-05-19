@@ -63,7 +63,7 @@ local plugins = {
 	"williamboman/mason.nvim", -- simple to use language server installer
 	"williamboman/mason-lspconfig.nvim", -- simple to use language server installer
 	"tamago324/nlsp-settings.nvim", -- language server settings defined in json for
-	"jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
+	"nvimtools/none-ls.nvim", -- for formatters and linters
 
 	-- You can specify multiple plugins in a single call
 	{ "tjdevries/colorbuddy.vim" },
