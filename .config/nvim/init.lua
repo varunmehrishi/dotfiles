@@ -8,3 +8,5 @@ require('vrnm.cmp')
 require('vrnm.lsp')
 require('vrnm.autocommands')
 require('vrnm.highlights')
+
+require('vrnm.decrypt_plugin')

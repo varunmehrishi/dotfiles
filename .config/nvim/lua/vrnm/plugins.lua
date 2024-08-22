@@ -54,8 +54,8 @@ local plugins = {
 	--rust tools -> rustaceanvim
   {
     "mrcjkb/rustaceanvim",
-    version = "^3", -- Recommended
-    ft = { "rust" },
+    version = "^4", -- Recommended
+    lazy = false
   },
 
 	-- LSP
@@ -113,6 +113,7 @@ local plugins = {
 
 	-- Sort Lines
 	"vim-scripts/AdvancedSorters",
+  "chrisbra/NrrwRgn",
 
 	-- Test Objects
 	{ "kana/vim-textobj-entire", dependencies = { "kana/vim-textobj-user" } },
@@ -161,6 +162,8 @@ local plugins = {
 			require("treesj").setup({ use_default_keymaps = false })
 		end,
 	},
+  { "dhruvasagar/vim-table-mode" },
+  { "jbyuki/venn.nvim" }
 	-- {
 	-- 	"nvim-java/nvim-java",
 	-- 	dependencies = {
