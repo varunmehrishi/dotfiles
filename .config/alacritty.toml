@@ -1,4 +1,4 @@
-import = ["~/.config/alacritty/dracula.yml"]
+general.import = ["~/.config/alacritty/dracula.yml"]
 
 [colors]
 draw_bold_text_with_bright_colors = true
@@ -395,7 +395,7 @@ chars = "\u001B|"
 key = "Backslash"
 mods = "Alt|Shift"
 
-[shell]
+[terminal.shell]
 args = ["-l", "-c", "tmux attach -t mac || tmux new -s mac"]
 program = "zsh"
 
