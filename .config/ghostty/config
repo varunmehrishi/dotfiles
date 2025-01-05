@@ -1,5 +1,5 @@
 bold-is-bright = true
-initial-command = "/bin/zsh -c -l /opt/homebrew/bin/start_tmux.sh"
+initial-command = "/bin/zsh -c -l 'tmux attach -t  mac || tmux new -s mac'"
 confirm-close-surface = false
 font-family = "FiraCode Nerd Font"
 font-size = 20
