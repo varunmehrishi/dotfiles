@@ -1,63 +1,4 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
-end
-vim.opt.rtp:prepend(lazypath)
-
-local plugins = {
-	-- Post-install/update hook with neovim command
-	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-
-	-- Post-install/update hook with call of vimscript function with argument
-	{
-		"glacambre/firenvim",
-		build = function()
-			vim.fn["firenvim#install"](0)
-		end,
-	},
-
-	-- Use dependency and run lua function after load
-	{
-		"lewis6991/gitsigns.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-	},
-
-	{
-		"numToStr/Comment.nvim",
-		config = function()
-			require("Comment").setup()
-		end,
-	},
-
-	{ "junegunn/fzf", build = ":call fzf#install()" },
-	"junegunn/fzf.vim",
-
-	-- cmp plugins
-	"hrsh7th/nvim-cmp", -- The completion plugin
-	"hrsh7th/cmp-buffer", -- buffer completions
-	"hrsh7th/cmp-path", -- path completions
-	"hrsh7th/cmp-cmdline", -- cmdline completions
-	"hrsh7th/cmp-nvim-lsp",
-	"saadparwaiz1/cmp_luasnip", -- snippet completions
-
-	-- snippets
-	"L3MON4D3/LuaSnip", --snippet engine
-	"rafamadriz/friendly-snippets", -- a bunch of snippets to use
-
-	--rust tools -> rustaceanvim
-  {
-    "mrcjkb/rustaceanvim",
-    version = "^4", -- Recommended
-    lazy = false
-  },
-
+return {
 	-- LSP
 	"neovim/nvim-lspconfig", -- enable LSP
 	"williamboman/mason.nvim", -- simple to use language server installer
@@ -67,30 +8,6 @@ local plugins = {
 
 	-- You can specify multiple plugins in a single call
 	{ "tjdevries/colorbuddy.vim" },
-
-	-- You can alias plugin names
-	{
-		"dracula/vim",
-		name = "dracula",
-		config = function()
-			vim.cmd([[colorscheme dracula]])
-		end,
-	},
-	{
-		"nvim-lualine/lualine.nvim",
-		config = function()
-			require("lualine").setup({ options = { theme = "dracula" } })
-		end,
-		dependencies = { "kyazdani42/nvim-web-devicons", lazy = true },
-	},
-
-	{
-		"j-hui/fidget.nvim",
-		tag = "legacy",
-		config = function()
-			require("fidget").setup()
-		end,
-	},
 
 	"RRethy/vim-illuminate", -- illuminate word under cursor for lsp enabled buffers
 	"inkarkat/vim-ingo-library",
@@ -113,7 +30,7 @@ local plugins = {
 
 	-- Sort Lines
 	"vim-scripts/AdvancedSorters",
-  "chrisbra/NrrwRgn",
+	"chrisbra/NrrwRgn",
 
 	-- Test Objects
 	{ "kana/vim-textobj-entire", dependencies = { "kana/vim-textobj-user" } },
@@ -129,16 +46,6 @@ local plugins = {
 	-- { "mg979/vim-visual-multi", branch = "master" },
 
 	"hlucco/nvim-eswpoch",
-	{
-		"mbbill/undotree",
-		config = function()
-			vim.cmd([[
-                if !exists('g:undotree_SetFocusWhenToggle')
-                    let g:undotree_SetFocusWhenToggle = 1
-                endif
-      ]])
-		end,
-	},
 	{
 		"ggandor/leap.nvim",
 		config = function()
@@ -162,8 +69,8 @@ local plugins = {
 			require("treesj").setup({ use_default_keymaps = false })
 		end,
 	},
-  { "dhruvasagar/vim-table-mode" },
-  { "jbyuki/venn.nvim" }
+	{ "dhruvasagar/vim-table-mode" },
+	{ "jbyuki/venn.nvim" },
 	-- {
 	-- 	"nvim-java/nvim-java",
 	-- 	dependencies = {
@@ -186,5 +93,3 @@ local plugins = {
 	-- 	},
 	-- },
 }
-
-require("lazy").setup(plugins, {})

@@ -1,6 +1,6 @@
 require('vrnm.options')
 require('vrnm.keymaps')
-require('vrnm.plugins')
+require('vrnm.lazy')
 require('vrnm.telescope')
 require('vrnm.gitsigns')
 require('vrnm.treesitter')
