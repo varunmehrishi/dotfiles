@@ -136,29 +136,38 @@ vim.keymap.set("n", "<leader>vc", require("telescope.builtin").commands, { desc 
 vim.keymap.set("n", "<leader>t", "<cmd>Telescope<CR>", { desc = "Open Telescope command palette" })
 vim.keymap.set("n", "<leader>T", function()
   -- Create a custom picker for common Telescope commands
-  require("telescope.builtin").select_menu({
+  local pickers = require("telescope.pickers")
+  local finders = require("telescope.finders")
+  local conf = require("telescope.config").values
+  local actions = require("telescope.actions")
+  local action_state = require("telescope.actions.state")
+
+  -- Define the commands
+  local commands = {
+    { name = "Find Files", action = "find_files" },
+    { name = "Live Grep", action = "live_grep" },
+    { name = "Buffers", action = "buffers" },
+    { name = "Help Tags", action = "help_tags" },
+    { name = "Git Files", action = "git_files" },
+    { name = "Git Status", action = "git_status" },
+    { name = "Git Commits", action = "git_commits" },
+    { name = "Git Branches", action = "git_branches" },
+    { name = "Commands", action = "commands" },
+    { name = "Command History", action = "command_history" },
+    { name = "Search History", action = "search_history" },
+    { name = "Marks", action = "marks" },
+    { name = "Registers", action = "registers" },
+    { name = "Keymaps", action = "keymaps" },
+    { name = "File Browser", action = "file_browser" },
+    { name = "Colorschemes", action = "colorscheme" },
+    { name = "Undo History", action = "undo" },
+  }
+
+  -- Create and run the picker
+  pickers.new({}, {
     prompt_title = "Telescope Commands",
-    results_title = "Available Commands",
-    finder = require("telescope.finders").new_table({
-      results = {
-        { name = "Find Files", action = "find_files" },
-        { name = "Live Grep", action = "live_grep" },
-        { name = "Buffers", action = "buffers" },
-        { name = "Help Tags", action = "help_tags" },
-        { name = "Git Files", action = "git_files" },
-        { name = "Git Status", action = "git_status" },
-        { name = "Git Commits", action = "git_commits" },
-        { name = "Git Branches", action = "git_branches" },
-        { name = "Commands", action = "commands" },
-        { name = "Command History", action = "command_history" },
-        { name = "Search History", action = "search_history" },
-        { name = "Marks", action = "marks" },
-        { name = "Registers", action = "registers" },
-        { name = "Keymaps", action = "keymaps" },
-        { name = "File Browser", action = "file_browser" },
-        { name = "Colorschemes", action = "colorscheme" },
-        { name = "Undo History", action = "undo" },
-      },
+    finder = finders.new_table({
+      results = commands,
       entry_maker = function(entry)
         return {
           value = entry,
@@ -167,11 +176,10 @@ vim.keymap.set("n", "<leader>T", function()
         }
       end,
     }),
-    sorter = require("telescope.config").values.generic_sorter({}),
+    sorter = conf.generic_sorter({}),
     attach_mappings = function(prompt_bufnr, map)
-      local actions = require("telescope.actions")
       actions.select_default:replace(function()
-        local selection = require("telescope.actions.state").get_selected_entry()
+        local selection = action_state.get_selected_entry()
         actions.close(prompt_bufnr)
 
         local action = selection.value.action
@@ -185,7 +193,7 @@ vim.keymap.set("n", "<leader>T", function()
       end)
       return true
     end,
-  })
+  }):find()
 end, { desc = "Telescope menu" })
 
 -- Quick shortcuts
