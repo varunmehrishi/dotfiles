@@ -33,6 +33,9 @@ vim.keymap.set('n', '<S-x>', ':cclose<CR>', opts)
 
 vim.keymap.set('n', '<leader>u', ':UndotreeToggle<CR>', opts)
 
+-- Telescope undo (modern alternative)
+vim.keymap.set('n', '<leader>tu', '<cmd>Telescope undo<CR>', opts)
+
 -- Git fugitive
 vim.keymap.set('n', '<leader>gg', ':G<CR>', opts)
 -- fugitive 3 way merge mappings
@@ -46,6 +49,11 @@ vim.keymap.set('x', '<leader>y', '"*y', opts)
 vim.keymap.set('n', '<leader>fml', '<cmd>CellularAutomaton make_it_rain<CR>')
 
 vim.keymap.set('n', '<leader>tt', ':Neotree toggle<CR>')
+
+-- Global LSP keymaps (don't require LSP buffer)
+vim.keymap.set('n', '<leader>li', '<cmd>LspInfo<CR>', opts) -- LSP info
+vim.keymap.set('n', '<leader>lI', '<cmd>LspInstallInfo<CR>', opts) -- Mason info
+vim.keymap.set('n', '<leader>lr', '<cmd>LspRestart<CR>', opts) -- Restart LSP
 
 -- venn.nvim: enable or disable keymappings
 function _G.Toggle_venn()

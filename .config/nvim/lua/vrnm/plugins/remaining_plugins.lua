@@ -3,11 +3,15 @@ return {
 	"neovim/nvim-lspconfig", -- enable LSP
 	"williamboman/mason.nvim", -- simple to use language server installer
 	"williamboman/mason-lspconfig.nvim", -- simple to use language server installer
-	"tamago324/nlsp-settings.nvim", -- language server settings defined in json for
-	"nvimtools/none-ls.nvim", -- for formatters and linters
+	-- Removed: "tamago324/nlsp-settings.nvim" (deprecated)
+
+	-- Modern formatting and linting (replaces null-ls)
+	"stevearc/conform.nvim", -- modern formatter
+	"mfussenegger/nvim-lint", -- modern linter
 
 	-- You can specify multiple plugins in a single call
 	{ "tjdevries/colorbuddy.vim" },
+	"nvim-tree/nvim-web-devicons", -- File icons (used by many plugins)
 
 	"RRethy/vim-illuminate", -- illuminate word under cursor for lsp enabled buffers
 	"inkarkat/vim-ingo-library",
@@ -28,9 +32,17 @@ return {
 	"tpope/vim-surround",
 	"tpope/vim-unimpaired",
 
-	-- Sort Lines
-	"vim-scripts/AdvancedSorters",
+	-- Sort Lines (modern alternative)
+	"vim-scripts/AdvancedSorters", -- Keep for compatibility
 	"chrisbra/NrrwRgn",
+
+	-- Modern sorting alternative
+	{
+		"sQVe/sort.nvim",
+		config = function()
+			require("sort").setup()
+		end,
+	},
 
 	-- Test Objects
 	{ "kana/vim-textobj-entire", dependencies = { "kana/vim-textobj-user" } },
@@ -41,6 +53,9 @@ return {
 	{ "nvim-telescope/telescope-file-browser.nvim" },
 	{ "nvim-telescope/telescope-ui-select.nvim" },
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+
+	-- Modern Telescope enhancements
+	{ "debugloop/telescope-undo.nvim" }, -- Undo history in Telescope
 	-- multiple cursors
 	--
 	-- { "mg979/vim-visual-multi", branch = "master" },
@@ -53,14 +68,7 @@ return {
 		end,
 	},
 	"eandrju/cellular-automaton.nvim",
-	{
-		"nvim-neo-tree/neo-tree.nvim",
-		branch = "v3.x",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"MunifTanjim/nui.nvim",
-		},
-	},
+	-- Neo-tree removed and replaced with oil.nvim
 	{
 		"Wansmer/treesj",
 		-- keys = { "<space>tm", "<space>tj", "<space>ts" },
