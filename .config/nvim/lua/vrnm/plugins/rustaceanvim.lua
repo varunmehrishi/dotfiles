@@ -169,6 +169,17 @@ return {
 							extraArgs = { "--all", "--", "-W", "clippy::all" },
 						},
 
+						-- Exclude directories from analysis
+						files = {
+							excludeDirs = {
+								".cargo",
+								".direnv",
+								".git",
+								"target",
+								"build/"
+							}
+						},
+
 						-- Enable code lens
 						lens = {
 							enable = true,
