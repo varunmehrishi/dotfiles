@@ -11,3 +11,5 @@ quit-after-last-window-closed = true
 theme = "Dracula"
 window-height = 100
 window-width = 200
+clipboard-read = allow
+clipboard-write = allow
