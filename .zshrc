@@ -1,120 +1,105 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-export ZPLUG_HOME=/opt/homebrew/opt/zplug
-source $ZPLUG_HOME/init.zsh
+### History & Zsh Options ###
+setopt HIST_IGNORE_DUPS SHARE_HISTORY INC_APPEND_HISTORY EXTENDED_HISTORY
+setopt HIST_FIND_NO_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS HIST_SAVE_NO_DUPS
+setopt NO_HUP
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+export HISTFILE="$HOME/.zsh_history"
+export HISTSIZE=10000000
+export SAVEHIST=10000000
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-# ZSH_THEME="spaceship"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git fd fzf-tab fast-syntax-highlighting rust)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-export EDITOR='vim'
-export MANPAGER='nvim +Man!'
-export MANWIDTH=999
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-#
-
-zplug 'dracula/zsh', as:theme
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-
+### Locale ###
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
-# export JAVA_HOME=/usr/local/opt/openjdk@11
-# export PATH=$JAVA_HOME/bin:$PATH
 
+### Zinit Setup ###
+if [[ ! -f ~/.zinit/bin/zinit.zsh ]]; then
+  mkdir -p ~/.zinit && git clone https://github.com/zdharma-continuum/zinit ~/.zinit/bin
+fi
+source ~/.zinit/bin/zinit.zsh
+
+## Plugin Load ###
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light Aloxaf/fzf-tab
+zinit ice pick"plugins/git/git.plugin.zsh"
+zinit light ohmyzsh/ohmyzsh
+
+### Tool Inits ###
+eval "$(zoxide init zsh)"
+
+# fnm (Node version manager)
+zinit ice wait'1' lucid
+zinit light Schniz/fnm
+eval "$(fnm env --shell=zsh)"
+
+
+# Starship prompt
+zinit ice wait'0' lucid
+zinit light starship/starship
+eval "$(starship init zsh)"
+
+
+# Load fzf key bindings and completion
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+
+# SDKMAN lazy loader
+sdk_lazy() {
+  export SDKMAN_DIR="$HOME/.sdkman"
+  [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+  unset -f sdk_lazy
+}
+alias sdk=sdk_lazy
+
+awsuse() {
+  local profile="$1"
+  [[ -z "$profile" ]] && { echo "usage: awsuse <profile>" >&2; return 1 }
+
+  # fetch the JSON block (requires AWS CLI v2.10+ and jq)
+  local json
+  if ! json=$(ada credentials print --profile="$profile" 2>/dev/null); then
+    echo "awsuse: could not obtain creds for '$profile'" >&2
+    return 1
+  fi
+
+  # export the three SigV4 vars (+ profile & region for convenience)
+  export AWS_ACCESS_KEY_ID=$(jq -r '.AccessKeyId'      <<<"$json")
+  export AWS_SECRET_ACCESS_KEY=$(jq -r '.SecretAccessKey' <<<"$json")
+  export AWS_SESSION_TOKEN=$(jq -r '.SessionToken'     <<<"$json")
+  export AWS_PROFILE="$profile"
+  # export AWS_REGION=$(aws configure get region --profile "$profile" 2>/dev/null)
+
+  echo "awsuse: now using '$profile'  (expires $(jq -r '.Expiration' <<<"$json"))"
+}
+
+### Paths ###
+export PATH="$HOME/Utils:$HOME/.scripts:$HOME/.toolbox/bin:$HOME/.local/bin:/opt/homebrew/opt/mysql-client/bin:/opt/homebrew/opt/libpq/bin:$PATH"
+
+### Editor ###
+export EDITOR='nvim'
+export VISUAL='nvim'
+export MANPAGER='nvim +Man!'
+export MANWIDTH=999
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey -M emacs '^X^E' edit-command-line
+
+
+### Completions ###
+autoload -Uz compinit && compinit -C
+
+### Partial history search with arrow keys ###
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+
+### Aliases ###
 alias q='exit'
+alias tunnel='ssh -L 2009:localhost:2009 clouddesk -f -N'
 alias ddk='mosh clouddesk -- zsh -c "tmux attach -t cloud || tmux new -s cloud"'
 alias gd='git delta'
 alias v='nvim'
@@ -125,11 +110,14 @@ alias ls='eza'
 alias ll='eza -l'
 alias la='eza -al'
 alias cat='bat'
+alias socks_tunnel='ssh -N -C -D 1080 clouddesk'
+# alias mcurl=curl -L --cookie-jar ~/.midway/cookie --cookie ~/.midway/cookie
 
+# Suffix aliases
 alias -s {ape,avi,flv,m4a,mkv,mov,mp3,mp4,mpeg,mpg,ogg,ogm,wav,webm}=mpv
-# alias -s {c,cpp,cfg,txt,py,java,sc,json}=vim
 alias -s {csv,tsv,psv,xslx}=vd
 
+# Global aliases
 alias -g C='| pbcopy'
 alias -g F='| fzf'
 alias -g G='| grep'
@@ -137,39 +125,5 @@ alias -g L='| less'
 alias -g R='| rg'
 alias -g V='| vim -'
 
-if type brew &>/dev/null; then
-    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-
-    autoload -Uz compinit
-    compinit
-fi
-
-HISTFILE="$HOME/.zsh_history"
-HISTSIZE=10000000
-SAVEHIST=10000000
-setopt BANG_HIST                 # Treat the '!' character specially during expansion.
-setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
-setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
-setopt SHARE_HISTORY             # Share history between all sessions.
-setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
-setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
-setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
-setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
-setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
-setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
-setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
-setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
-setopt HIST_BEEP                 # Beep when accessing nonexistent history.
-
+### Custom Keybind ###
 bindkey "ç" fzf-cd-widget
-
-eval "$(zoxide init zsh)"
-# eval "$(fnm env --shell=zsh)"
-eval "$(starship init zsh)"
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
