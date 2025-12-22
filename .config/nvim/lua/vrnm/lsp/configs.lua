@@ -1,7 +1,8 @@
 -- Load Mason setup first
 require("vrnm.mason-setup")
 
-local lspconfig = require("lspconfig")
+-- Load nvim-lspconfig to make configs available to vim.lsp.config
+require("lspconfig")
 
 local servers = { "jsonls", "lua_ls", "clangd", "ts_ls", "yamlls", "pyright", "bashls", "html", "cssls"}
 -- Note: rust_analyzer removed as it's managed separately
@@ -17,5 +18,7 @@ for _, server in pairs(servers) do
     opts = vim.tbl_deep_extend("force", server_custom_opts, opts)
   end
 
-  lspconfig[server].setup(opts)
+  -- Use new Neovim 0.11+ API
+  vim.lsp.config(server, opts)
+  vim.lsp.enable(server)
 end
