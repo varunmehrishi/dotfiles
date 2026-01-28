@@ -34,4 +34,4 @@ function base64DecodeCurrentLine()
 end
 
 -- Map a key to invoke the base64DecodeCurrentLine function
-vim.api.nvim_set_keymap('n', '<leader>bd', [[:lua base64DecodeCurrentLine()<CR>]], { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>bd', base64DecodeCurrentLine, { noremap = true, silent = true, desc = "Base64 Decode Line" })

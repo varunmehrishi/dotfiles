@@ -37,11 +37,11 @@ M.show_buffer_diagnostics = function()
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, formatted)
 
   -- Set buffer options
-  vim.api.nvim_buf_set_option(buf, "modifiable", false)
-  vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+  vim.bo[buf].modifiable = false
+  vim.bo[buf].filetype = "markdown"
 
   -- Calculate window size
-  local width = math.min(100, vim.api.nvim_get_option("columns") - 10)
+  local width = math.min(100, vim.o.columns - 10)
   local height = math.min(#formatted + 2, 30)
 
   -- Create a floating window
@@ -49,8 +49,8 @@ M.show_buffer_diagnostics = function()
     relative = "editor",
     width = width,
     height = height,
-    col = math.floor((vim.api.nvim_get_option("columns") - width) / 2),
-    row = math.floor((vim.api.nvim_get_option("lines") - height) / 2),
+    col = math.floor((vim.o.columns - width) / 2),
+    row = math.floor((vim.o.lines - height) / 2),
     style = "minimal",
     border = "rounded",
     title = "Buffer Diagnostics",
@@ -58,15 +58,15 @@ M.show_buffer_diagnostics = function()
   })
 
   -- Set window options
-  vim.api.nvim_win_set_option(win, "wrap", true)
-  vim.api.nvim_win_set_option(win, "cursorline", true)
+  vim.wo[win].wrap = true
+  vim.wo[win].cursorline = true
 
   -- Add keymaps to close the window
-  vim.api.nvim_buf_set_keymap(buf, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
-  vim.api.nvim_buf_set_keymap(buf, "n", "<Esc>", "<cmd>close<CR>", { noremap = true, silent = true })
+  vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = buf, noremap = true, silent = true })
+  vim.keymap.set("n", "<Esc>", "<cmd>close<CR>", { buffer = buf, noremap = true, silent = true })
 
   -- Add keymap to jump to the diagnostic location
-  vim.api.nvim_buf_set_keymap(buf, "n", "<CR>", [[<cmd>lua require("vrnm.lsp.diagnostics").jump_to_diagnostic()<CR>]], { noremap = true, silent = true })
+  vim.keymap.set("n", "<CR>", function() require("vrnm.lsp.diagnostics").jump_to_diagnostic() end, { buffer = buf, noremap = true, silent = true })
 
   -- Store diagnostics in a global variable for the jump function
   vim.g.current_diagnostics = diagnostics

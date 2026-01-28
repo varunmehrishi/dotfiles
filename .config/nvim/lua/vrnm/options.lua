@@ -9,7 +9,7 @@ local options = {
   pumheight = 10,                              -- pop up menu height
   relativenumber = false,                      -- set relative numbered lines
   shiftwidth = 2,                              -- the number of spaces inserted for each indentation
-  showmode = true,                             -- show current mode --INSERT--
+  showmode = false,                            -- disabled since cmdheight=0 hides command line
   signcolumn = "yes",                          -- always show sign column
   tabstop = 2,                                 -- insert 2 spaces for a tab
   updatetime = 300,                            -- faster completions

@@ -128,7 +128,7 @@ end
 M.on_attach = function(client, bufnr)
   -- vim.notify(client.name .. " starting...")
   -- TODO: refactor this into a method that checks if string in list
-  if client.name == "tsserver" then
+  if client.name == "ts_ls" then
     -- Use server_capabilities instead of deprecated client.server_capabilities
     client.server_capabilities.documentFormattingProvider = false
   end

@@ -76,8 +76,8 @@ require("gitsigns").setup({
 		map('n', '<leader>gd', gs.diffthis, {desc = "Git Diff This"})
 
 		-- Blame
-		map('n', '<leader>gb', gs.toggle_current_line_blame, {desc = "Git Toggle Blame"})
-		map('n', '<leader>gB', function() gs.blame_line{full=true} end, {desc = "Git Full Blame"})
+		map('n', '<leader>gl', gs.toggle_current_line_blame, {desc = "Git Toggle Line Blame"})
+		map('n', '<leader>gb', function() gs.blame_line{full=true} end, {desc = "Git Full Blame"})
 
 		-- Text object
 		map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>', {desc = "Git Select Hunk"})

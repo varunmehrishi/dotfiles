@@ -69,8 +69,8 @@ vim.keymap.set("n", "<leader>sS", require("telescope.builtin").lsp_workspace_sym
 
 -- Git integration (essential missing features)
 vim.keymap.set("n", "<leader>gc", require("telescope.builtin").git_commits, { desc = "[G]it [C]ommits" })
-vim.keymap.set("n", "<leader>gb", require("telescope.builtin").git_branches, { desc = "[G]it [B]ranches" })
-vim.keymap.set("n", "<leader>gs", require("telescope.builtin").git_status, { desc = "[G]it [S]tatus" })
+vim.keymap.set("n", "<leader>gB", require("telescope.builtin").git_branches, { desc = "[G]it [B]ranches" })
+-- Note: <leader>gs used by gitsigns for stage hunk, use <leader>gh for git status with hunk actions
 vim.keymap.set("n", "<leader>sr", require("telescope.builtin").resume, { desc = "[S]earch [R]esume" })
 
 -- Alternative to GitSigns extension - use built-in git_status with file focus
