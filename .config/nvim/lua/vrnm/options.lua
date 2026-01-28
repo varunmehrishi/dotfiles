@@ -18,7 +18,8 @@ local options = {
   writebackup = false,                         -- write backup
   guifont = {'FiraCode Nerd Font', ':h20'},    -- gui font for neovide gui
   cmdheight = 0,                               -- no empty line at bottom waiting for command
-  smartindent = false                          -- use indentation from treesitter
+  smartindent = false,                         -- use indentation from treesitter
+  autoindent = true,                           -- fallback indentation
 }
 
 for k, v in pairs(options) do

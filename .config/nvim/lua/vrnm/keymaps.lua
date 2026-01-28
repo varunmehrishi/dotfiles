@@ -31,10 +31,8 @@ vim.keymap.set('n', '<S-h>', ':bprevious<CR>', opts)
 vim.keymap.set('n', '<S-d>', ':bdelete<CR>', opts)
 vim.keymap.set('n', '<S-x>', ':cclose<CR>', opts)
 
-vim.keymap.set('n', '<leader>u', ':UndotreeToggle<CR>', opts)
-
--- Telescope undo (modern alternative)
-vim.keymap.set('n', '<leader>tu', '<cmd>Telescope undo<CR>', opts)
+-- Undo history via Telescope
+vim.keymap.set('n', '<leader>u', '<cmd>Telescope undo<CR>', opts)
 
 -- Git fugitive
 vim.keymap.set('n', '<leader>gg', ':G<CR>', opts)

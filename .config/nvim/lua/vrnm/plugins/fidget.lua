@@ -1,7 +1,11 @@
 return {
 	"j-hui/fidget.nvim",
-	tag = "legacy",
-	config = function()
-		require("fidget").setup()
-	end,
+	event = "LspAttach",
+	opts = {
+		notification = {
+			window = {
+				winblend = 0,
+			},
+		},
+	},
 }

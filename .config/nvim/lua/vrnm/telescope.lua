@@ -31,8 +31,6 @@ require("telescope").load_extension("undo")
 require("telescope").load_extension("file_browser")
 -- Enable telescope fzf native, if installed
 require("telescope").load_extension("fzf")
--- Load gitsigns extension (commented out until we add the plugin)
--- require("telescope").load_extension("gitsigns")
 
 -- See `:help telescope.builtin`
 vim.keymap.set("n", "<leader>h", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })

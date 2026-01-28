@@ -50,13 +50,19 @@ return {
   config = function(_, opts)
     local wk = require("which-key")
     wk.setup(opts)
-    
-    -- Updated to new mapping spec format
+
     wk.add({
-      { "<leader>f", group = "find" },
+      { "<leader>c", group = "code" },
+      { "<leader>d", group = "diagnostics" },
+      { "<leader>f", group = "find/file" },
       { "<leader>g", group = "git" },
       { "<leader>l", group = "lsp" },
-      { "<leader>t", group = "toggle/telescope" },
+      { "<leader>m", group = "format" },
+      { "<leader>r", group = "rust/rename" },
+      { "<leader>s", group = "search" },
+      { "<leader>t", group = "telescope" },
+      { "<leader>v", group = "venn/vim" },
+      { "<leader>w", group = "workspace" },
       { "<leader>y", group = "yank" },
     })
   end,

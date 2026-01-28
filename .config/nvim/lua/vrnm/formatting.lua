@@ -16,9 +16,7 @@ conform.setup({
     markdown = { "prettier" },
     html = { "prettier" },
     css = { "prettier" },
-    rust = { "rustfmt" }, -- Uses system rustfmt
-    -- c = { "clang_format" }, -- Managed separately
-    -- cpp = { "clang_format" }, -- Managed separately
+    rust = { "rustfmt" },
   },
 
   -- Configure formatters
@@ -33,7 +31,7 @@ conform.setup({
 
   -- Format on save
   format_on_save = {
-    timeout_ms = 500,
+    timeout_ms = 1000,
     lsp_fallback = true,
   },
 })

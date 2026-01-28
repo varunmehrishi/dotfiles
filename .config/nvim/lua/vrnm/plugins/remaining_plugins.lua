@@ -10,10 +10,22 @@ return {
 	-- You can specify multiple plugins in a single call
 	{ "tjdevries/colorbuddy.vim" },
 	"nvim-tree/nvim-web-devicons", -- File icons (used by many plugins)
-
-	"RRethy/vim-illuminate", -- illuminate word under cursor for lsp enabled buffers
-	"inkarkat/vim-ingo-library",
-	"inkarkat/vim-mark",
+	{
+		"inkarkat/vim-mark",
+		dependencies = { "inkarkat/vim-ingo-library" },
+		init = function()
+			-- Disable all default mappings
+			vim.g.mw_no_mappings = 1
+		end,
+		config = function()
+			-- Only set up <leader>m for marking
+			vim.keymap.set("n", "<leader>m", "<Plug>MarkSet", { desc = "Mark word" })
+			vim.keymap.set("x", "<leader>m", "<Plug>MarkSet", { desc = "Mark selection" })
+			vim.keymap.set("n", "<leader>M", "<Plug>MarkClear", { desc = "Clear mark" })
+			vim.keymap.set("n", "<leader>n", "<Plug>MarkSearchNext", { desc = "Next mark" })
+			vim.keymap.set("n", "<leader>N", "<Plug>MarkSearchPrev", { desc = "Prev mark" })
+		end,
+	},
 
 	"mechatroner/rainbow_csv",
 
@@ -59,8 +71,6 @@ return {
 
 	-- Modern Telescope enhancements
 	{ "debugloop/telescope-undo.nvim" },
-
-	"hlucco/nvim-eswpoch",
 	{
 		url = "https://codeberg.org/andyg/leap.nvim",
 		config = function()

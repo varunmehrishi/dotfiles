@@ -46,14 +46,17 @@ local kind_icons = {
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
 cmp.setup {
+  performance = {
+    debounce = 60,
+    throttle = 30,
+    fetching_timeout = 500,
+  },
   snippet = {
     expand = function(args)
-      luasnip.lsp_expand(args.body) -- For `luasnip` users.
+      luasnip.lsp_expand(args.body)
     end,
   },
   mapping = {
-    --    ["<C-k>"] = cmp.mapping.select_prev_item(),
-		--    ["<C-j>"] = cmp.mapping.select_next_item(),
     ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
     ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
     ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
@@ -116,12 +119,32 @@ cmp.setup {
     select = false,
   },
   window = {
-    documentation = cmp.config.window.bordered()
-  },
-  view = {
-    entries = 'native'
+    documentation = cmp.config.window.bordered(),
   },
   experimental = {
     ghost_text = true,
   },
 }
+
+-- Cmdline completions
+cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline(),
+  formatting = {
+    fields = { "abbr" },
+  },
+  sources = cmp.config.sources({
+    { name = "path" },
+  }, {
+    { name = "cmdline" },
+  }),
+})
+
+cmp.setup.cmdline("/", {
+  mapping = cmp.mapping.preset.cmdline(),
+  formatting = {
+    fields = { "abbr" },
+  },
+  sources = {
+    { name = "buffer" },
+  },
+})

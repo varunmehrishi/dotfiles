@@ -16,7 +16,7 @@ return {
 				lualine_y = { "encoding", "fileformat", "filetype" },
 				lualine_z = { "progress", "location" },
 			},
-			extensions = { "neo-tree", "fugitive" }, -- Add extensions for better integration
+			extensions = { "oil", "fugitive" },
 		})
 	end,
 	dependencies = {
