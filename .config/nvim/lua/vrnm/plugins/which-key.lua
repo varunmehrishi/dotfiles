@@ -54,6 +54,7 @@ return {
     wk.add({
       { "<leader>c", group = "code" },
       { "<leader>d", group = "diagnostics" },
+      { "<leader>D", group = "debug" },
       { "<leader>f", group = "find/file" },
       { "<leader>g", group = "git" },
       { "<leader>l", group = "lsp" },
@@ -61,6 +62,7 @@ return {
       { "<leader>r", group = "rust/rename" },
       { "<leader>s", group = "search/sort" },
       { "<leader>t", group = "telescope/treesj" },
+      { "<leader>T", group = "terminal" },
       { "<leader>v", group = "venn/vim" },
       { "<leader>w", group = "workspace" },
       { "<leader>y", group = "yank" },
