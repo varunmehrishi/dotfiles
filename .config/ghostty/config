@@ -6,6 +6,7 @@ font-size = 20
 font-style = "Retina"
 font-thicken = true
 macos-non-native-fullscreen = true
+macos-option-as-alt = true
 macos-titlebar-style = hidden
 quit-after-last-window-closed = true
 theme = "Dracula"
