@@ -69,6 +69,9 @@ eval "$(starship init zsh)"
 # Load fzf key bindings and completion
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
+# atuin - better shell history (replaces fzf ctrl-r)
+eval "$(atuin init zsh)"
+
 # SDKMAN lazy loader
 sdk() {
   unfunction sdk

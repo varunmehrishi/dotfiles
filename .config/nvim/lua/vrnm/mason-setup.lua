@@ -35,12 +35,16 @@ local servers = {
   -- "gopls",        -- Go (removed - not used)
   "html",            -- HTML
   "cssls",           -- CSS
+  "jdtls",           -- Java (configured by nvim-jdtls, not lspconfig)
 }
 
 -- Setup mason-lspconfig
 mason_lspconfig.setup({
   ensure_installed = servers,
   automatic_installation = true,
+  handlers = {
+    ["jdtls"] = function() end, -- configured by nvim-jdtls in ftplugin/java.lua
+  },
 })
 
 -- Auto-install formatters and linters
