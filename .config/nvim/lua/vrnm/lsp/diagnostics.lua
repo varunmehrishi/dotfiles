@@ -149,19 +149,6 @@ M.setup = function()
     },
   })
 
-  -- Override the default hover handler for better formatting
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "rounded",
-    max_width = 100,
-    max_height = 30,
-  })
-
-  -- Override the default signature help handler
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = "rounded",
-    max_width = 100,
-    max_height = 20,
-  })
 end
 
 -- Function to jump to a diagnostic from the diagnostics window

@@ -33,7 +33,6 @@ M.setup = function()
   }
 
   vim.diagnostic.config(config)
-  -- Note: hover/signatureHelp handlers configured in lsp/diagnostics.lua
 end
 
 local function lsp_highlight_document(client)
@@ -58,9 +57,15 @@ local function lsp_keymaps(bufnr)
   vim.keymap.set("n", "gu", vim.lsp.buf.references, opts) -- Also keep gu for backward compatibility
 
   -- Documentation & Help
-  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-  vim.keymap.set("n", "<leader>k", vim.lsp.buf.signature_help, opts) -- Changed from <C-k> to avoid conflict
-  vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts) -- NEW: Signature help in insert mode
+  vim.keymap.set("n", "K", function()
+    vim.lsp.buf.hover({ border = "rounded", max_width = 100, max_height = 30 })
+  end, opts)
+  vim.keymap.set("n", "<leader>k", function()
+    vim.lsp.buf.signature_help({ border = "rounded", max_width = 100, max_height = 20 })
+  end, opts) -- Changed from <C-k> to avoid conflict
+  vim.keymap.set("i", "<C-h>", function()
+    vim.lsp.buf.signature_help({ border = "rounded", max_width = 100, max_height = 20 })
+  end, opts) -- NEW: Signature help in insert mode
 
   -- Code Actions & Refactoring (using <leader> prefix)
   vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
