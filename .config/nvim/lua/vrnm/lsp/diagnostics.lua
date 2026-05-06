@@ -91,7 +91,14 @@ M.setup = function()
     },
 
     -- Show signs in the sign column
-    signs = true,
+    signs = {
+      text = {
+        [vim.diagnostic.severity.ERROR] = "",
+        [vim.diagnostic.severity.WARN]  = "",
+        [vim.diagnostic.severity.HINT]  = "",
+        [vim.diagnostic.severity.INFO]  = "",
+      },
+    },
 
     -- Don't update diagnostics in insert mode to avoid distraction
     update_in_insert = false,
