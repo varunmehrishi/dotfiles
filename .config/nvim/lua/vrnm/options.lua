@@ -1,3 +1,12 @@
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+
+local pynvim_python = vim.fn.expand("$HOME/.local/bin/pynvim-python")
+if vim.fn.executable(pynvim_python) == 1 then
+  vim.g.python3_host_prog = pynvim_python
+end
+
 local options = {
   backup = false,                              -- disable backup files
   completeopt = { "menuone", "noselect" },     -- for cmp

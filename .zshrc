@@ -7,6 +7,11 @@ export HISTFILE="$HOME/.zsh_history"
 export HISTSIZE=10000000
 export SAVEHIST=10000000
 
+### Resource Limits ###
+if (( $(ulimit -n) < 8192 )); then
+  ulimit -n 8192 2>/dev/null || true
+fi
+
 ### Locale ###
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
