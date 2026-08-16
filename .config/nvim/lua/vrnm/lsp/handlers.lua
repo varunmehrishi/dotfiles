@@ -1,13 +1,5 @@
 local M = {}
 
-local function lsp_highlight_document(client)
-  local status_ok, illuminate = pcall(require, "illuminate")
-  if not status_ok then
-    return
-  end
-  illuminate.on_attach(client)
-end
-
 local function lsp_keymaps(bufnr)
   local opts = { buffer = bufnr, noremap = true, silent = true }
 
@@ -90,7 +82,6 @@ M.on_attach = function(client, bufnr)
     client.server_capabilities.documentFormattingProvider = false
   end
   lsp_keymaps(bufnr)
-  lsp_highlight_document(client)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

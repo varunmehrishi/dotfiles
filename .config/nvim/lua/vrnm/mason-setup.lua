@@ -42,6 +42,10 @@ local servers = {
 mason_lspconfig.setup({
   ensure_installed = servers,
   automatic_installation = true,
+  -- Servers are configured and enabled explicitly in vrnm/lsp/configs.lua.
+  -- Leaving Mason's automatic enablement on also starts every installed
+  -- package with an lspconfig entry (including the StyLua formatter).
+  automatic_enable = false,
   handlers = {
     ["jdtls"] = function() end, -- configured by nvim-jdtls in ftplugin/java.lua
   },

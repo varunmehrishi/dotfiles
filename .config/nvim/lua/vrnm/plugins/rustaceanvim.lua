@@ -1,12 +1,12 @@
 return {
 	"mrcjkb/rustaceanvim",
-	version = "^6", -- Latest version (v6)
-	ft = { "rust" }, -- Only load for Rust files
+	version = "^9",
+	lazy = false, -- rustaceanvim implements its own lazy-loading
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"mfussenegger/nvim-dap", -- For debugging support
 	},
-	config = function()
+	init = function()
 		-- Set up rustaceanvim with modern configuration
 		vim.g.rustaceanvim = {
 			-- Plugin configuration
