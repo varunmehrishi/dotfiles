@@ -30,9 +30,23 @@ Modular Lua configuration using [lazy.nvim](https://github.com/folke/lazy.nvim).
 - **Git**: fugitive, gitsigns
 - **Debugging**: nvim-dap + dap-ui
 - **File explorer**: Oil.nvim
-- **UI**: lualine, which-key, fidget, dressing, snacks
+- **UI**: lualine, which-key, fidget, dressing
 - **Editing**: vim-surround, vim-exchange, Comment.nvim, targets.vim, TreeSJ
 - **Utilities**: toggleterm, grug-far (find/replace), undotree, venn.nvim, vim-table-mode
+
+**Development workflows:**
+
+- Firenvim uses manual browser activation and leaves complex editors such as Quip and Google Docs/Sheets/Slides alone
+- `:FRust`, `<leader>rf`, or `<leader>xr` creates a temporary Cargo-backed Rust buffer with the LeetCode `Solution` helper
+- `:FPython` / `<leader>xp` creates a Pyright-backed Python scratch buffer
+- `<leader>xx` runs the current file; `<leader>xn`, `<leader>xf`, and `<leader>xa` run the nearest, current-file, or complete test suite
+- `<leader>xc` selects Cargo, Python, or npm project tasks; `<leader>xl` repeats the last task
+- `<F5>`, `<F10>`, `<F11>`, and `<F12>` control debugging; additional actions are under `<leader>D`
+- Project sessions save automatically; `<leader>ws`, `<leader>wo`, and `<leader>wp` save, load, or switch sessions
+- Normal completion hides standalone snippets; press `<C-k>` in Insert mode to request snippet/postfix completions for one invocation
+- `:ConfigHealth` (`<leader>ch`) checks language tools, debugger adapters, Firenvim, and the Chrome native-messaging manifest
+
+Surfingkeys configuration is tracked in `.config/surfingkeys/config.js`. It uses Chrome's native PDF viewer and enters lurking mode on Quip and Google productivity editors.
 
 ### Tmux (`.tmux.conf`)
 
@@ -74,3 +88,5 @@ These tools are expected to be installed (e.g., via Homebrew):
    - **Neovim**: lazy.nvim auto-installs plugins; Mason auto-installs LSP servers
    - **Zsh**: zinit auto-installs plugins on first shell start
    - **Tmux**: run `<prefix> I` to install tpm plugins
+4. For browser editing, install the Firenvim and Surfingkeys Chrome extensions. Firenvim's Neovim plugin installs its native-messaging host; verify it with `:ConfigHealth`.
+5. Paste `.config/surfingkeys/config.js` into Surfingkeys' advanced settings.
