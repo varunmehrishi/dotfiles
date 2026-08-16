@@ -52,6 +52,19 @@ local function ensure_rust_project()
 	return root, tests_dir
 end
 
+local function ensure_python_project()
+	local root = vim.fs.joinpath(vim.fn.stdpath("data"), "firenvim-python")
+	vim.fn.mkdir(root, "p")
+
+	write_if_missing(vim.fs.joinpath(root, "pyproject.toml"), {
+		"[tool.pyright]",
+		'pythonVersion = "3.11"',
+		'typeCheckingMode = "basic"',
+	})
+
+	return root
+end
+
 local function unused_rust_path(tests_dir, bufnr)
 	local stem = ("firenvim-%d-%d"):format(vim.fn.getpid(), bufnr)
 	local path = vim.fs.joinpath(tests_dir, stem .. ".rs")
@@ -59,6 +72,19 @@ local function unused_rust_path(tests_dir, bufnr)
 
 	while vim.uv.fs_stat(path) do
 		path = vim.fs.joinpath(tests_dir, ("%s-%d.rs"):format(stem, suffix))
+		suffix = suffix + 1
+	end
+
+	return path
+end
+
+local function unused_scratch_path(root, language, extension, bufnr)
+	local stem = ("firenvim-%s-%d-%d"):format(language, vim.fn.getpid(), bufnr)
+	local path = vim.fs.joinpath(root, stem .. extension)
+	local suffix = 1
+
+	while vim.uv.fs_stat(path) do
+		path = vim.fs.joinpath(root, ("%s-%d%s"):format(stem, suffix, extension))
 		suffix = suffix + 1
 	end
 
@@ -185,12 +211,109 @@ local function open_rust_scratch()
 	activate_rust()
 end
 
+local function activate_python()
+	local bufnr = vim.api.nvim_get_current_buf()
+	if vim.bo[bufnr].buftype ~= "" or not vim.bo[bufnr].modifiable then
+		vim.notify(":FPython requires a normal, modifiable buffer", vim.log.levels.ERROR)
+		return
+	end
+
+	local existing_path = vim.b[bufnr].firenvim_python_path
+	if existing_path then
+		vim.notify("This buffer is already using the Firenvim Python project: " .. existing_path)
+		return
+	end
+
+	local original_path = vim.api.nvim_buf_get_name(bufnr)
+	if not vim.g.started_by_firenvim and original_path ~= "" then
+		vim.notify(
+			":FPython will not replace a named file; use <leader>xp to open a new scratch buffer",
+			vim.log.levels.ERROR
+		)
+		return
+	end
+
+	local ok, root_or_error = pcall(ensure_python_project)
+	if not ok then
+		vim.notify("Could not prepare the Firenvim Python project: " .. root_or_error, vim.log.levels.ERROR)
+		return
+	end
+
+	local root = root_or_error
+	local python_path = unused_scratch_path(root, "python", ".py", bufnr)
+	vim.api.nvim_buf_set_name(bufnr, python_path)
+	local wrote, write_error = pcall(vim.api.nvim_buf_call, bufnr, function()
+		vim.cmd("silent write")
+	end)
+	if not wrote then
+		vim.api.nvim_buf_set_name(bufnr, original_path)
+		vim.notify("Could not create the Firenvim Python file: " .. write_error, vim.log.levels.ERROR)
+		return
+	end
+
+	vim.b[bufnr].firenvim_original_path = original_path
+	vim.b[bufnr].firenvim_python_path = python_path
+
+	local group = vim.api.nvim_create_augroup("VRNMFirenvimPython" .. bufnr, { clear = true })
+	if vim.g.started_by_firenvim then
+		vim.api.nvim_create_autocmd("BufWrite", {
+			group = group,
+			buffer = bufnr,
+			desc = "Synchronize the renamed Python buffer with Firenvim",
+			callback = function()
+				local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+				if #lines == 0 then
+					lines = { "" }
+				end
+				vim.fn["firenvim#write"](lines, vim.api.nvim_win_get_cursor(0))
+			end,
+		})
+	end
+
+	local function remove_scratch_file()
+		vim.fn.delete(python_path)
+	end
+
+	vim.api.nvim_create_autocmd("BufWipeout", {
+		group = group,
+		buffer = bufnr,
+		once = true,
+		callback = remove_scratch_file,
+	})
+	vim.api.nvim_create_autocmd("VimLeave", {
+		group = group,
+		once = true,
+		callback = remove_scratch_file,
+	})
+
+	vim.bo[bufnr].filetype = "python"
+	vim.notify("Python scratch project: " .. root)
+end
+
+local function open_python_scratch()
+	if not vim.g.started_by_firenvim and vim.api.nvim_buf_get_name(0) ~= "" then
+		local bufnr = vim.api.nvim_create_buf(true, false)
+		vim.api.nvim_win_set_buf(0, bufnr)
+	end
+
+	activate_python()
+end
+
 function M.setup()
 	vim.api.nvim_create_user_command("FRust", activate_rust, {
 		desc = "Use the current buffer as a Rust Solution Cargo test target",
 	})
 	vim.keymap.set("n", "<leader>rf", open_rust_scratch, {
 		desc = "Open a Rust Solution scratch buffer",
+	})
+	vim.keymap.set("n", "<leader>xr", open_rust_scratch, {
+		desc = "Open a Rust scratch buffer",
+	})
+	vim.api.nvim_create_user_command("FPython", activate_python, {
+		desc = "Use the current buffer as a Python scratch project file",
+	})
+	vim.keymap.set("n", "<leader>xp", open_python_scratch, {
+		desc = "Open a Python scratch buffer",
 	})
 end
 

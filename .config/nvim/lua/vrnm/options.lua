@@ -9,18 +9,26 @@ end
 
 local options = {
   backup = false,                              -- disable backup files
+  clipboard = "unnamedplus",                   -- use the system clipboard by default
   completeopt = { "menuone", "noselect" },     -- for cmp
   cursorline = true,                           -- highlight the current line
+  confirm = true,                              -- ask before abandoning unsaved changes
   expandtab = true,                            -- convert tabs to spaces
+  ignorecase = true,                           -- case-insensitive search by default
   mouse = "a",                                 -- enable mouse
   number = true,                               -- set numbered lines
   numberwidth = 2,                             -- width of number column
   pumheight = 10,                              -- pop up menu height
   relativenumber = false,                      -- set relative numbered lines
+  scrolloff = 6,                               -- keep context around the cursor
   shiftwidth = 2,                              -- the number of spaces inserted for each indentation
+  sidescrolloff = 8,                           -- keep horizontal context around the cursor
+  smartcase = true,                            -- uppercase in a search makes it case-sensitive
   showmode = false,                            -- disabled since cmdheight=0 hides command line
   signcolumn = "yes",                          -- always show sign column
   tabstop = 2,                                 -- insert 2 spaces for a tab
+  splitbelow = true,                           -- horizontal splits open below
+  splitright = true,                           -- vertical splits open to the right
   updatetime = 300,                            -- faster completions
   undodir = os.getenv('HOME') .. '/.undodir',  -- Add undodir for persistent undos
   undofile = true,                             -- enable persistent undos

@@ -1,5 +1,11 @@
 return {
   "stevearc/oil.nvim",
+  cmd = "Oil",
+  keys = {
+    { "-", "<cmd>Oil<cr>", desc = "Open parent directory in Oil" },
+    { "<leader>e", "<cmd>Oil<cr>", desc = "Open Oil file explorer" },
+    { "<leader>E", "<cmd>Oil --float<cr>", desc = "Open Oil in float mode" },
+  },
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     require("oil").setup({

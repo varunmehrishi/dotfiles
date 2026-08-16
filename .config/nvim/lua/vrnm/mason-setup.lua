@@ -83,6 +83,8 @@ local tools = {
   -- Linters
   "flake8",          -- Python linter
   "eslint_d",        -- JS/TS linter (faster than eslint)
+  "codelldb",        -- Rust debugger
+  "debugpy",         -- Python debugger
   -- Note: cppcheck might not be available in Mason registry
   -- We'll handle C/C++ linting differently
 }

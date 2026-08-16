@@ -9,29 +9,29 @@ return {
   "mfussenegger/nvim-lint", -- modern linter
 
   -- Utilities
-  { "tjdevries/colorbuddy.vim" },
-  "nvim-tree/nvim-web-devicons", -- File icons (used by many plugins)
+  { "tjdevries/colorbuddy.vim", lazy = true },
+  { "nvim-tree/nvim-web-devicons", lazy = true }, -- File icons (used by many plugins)
 
-  "mechatroner/rainbow_csv",
-  "tommcdo/vim-exchange",
+  { "mechatroner/rainbow_csv", ft = { "csv", "tsv", "rainbow_csv" } },
+  { "tommcdo/vim-exchange", event = "VeryLazy" },
 
   -- tpope plugins
-  "tpope/vim-abolish",
-  "tpope/vim-eunuch",
-  "tpope/vim-fugitive",
-  "tpope/vim-jdaddy",
-  "tpope/vim-repeat",
-  "tpope/vim-speeddating",
-  "tpope/vim-surround",
-  "tpope/vim-unimpaired",
+  { "tpope/vim-abolish", cmd = { "Abolish", "Subvert" } },
+  { "tpope/vim-eunuch", cmd = { "Delete", "Move", "Rename", "SudoWrite" } },
+  { "tpope/vim-fugitive", cmd = { "G", "Git", "Gdiffsplit", "Gread", "Gwrite" } },
+  { "tpope/vim-jdaddy", ft = "json" },
+  { "tpope/vim-repeat", event = "VeryLazy" },
+  { "tpope/vim-speeddating", event = "VeryLazy" },
+  { "tpope/vim-surround", event = "VeryLazy" },
+  { "tpope/vim-unimpaired", event = "VeryLazy" },
 
   -- Sorting
-  "vim-scripts/AdvancedSorters",
-  "chrisbra/NrrwRgn",
+  { "vim-scripts/AdvancedSorters", event = "VeryLazy" },
+  { "chrisbra/NrrwRgn", cmd = { "NarrowRegion", "NR", "NW" } },
 
   -- Text Objects
-  { "kana/vim-textobj-entire", dependencies = { "kana/vim-textobj-user" } },
-  "wellle/targets.vim",
+  { "kana/vim-textobj-entire", event = "VeryLazy", dependencies = { "kana/vim-textobj-user" } },
+  { "wellle/targets.vim", event = "VeryLazy" },
 
   -- Telescope with extensions
   {
@@ -49,9 +49,9 @@ return {
   },
 
   -- Fun
-  "eandrju/cellular-automaton.nvim",
+  { "eandrju/cellular-automaton.nvim", cmd = "CellularAutomaton" },
 
   -- Drawing and tables
-  { "dhruvasagar/vim-table-mode" },
-  { "jbyuki/venn.nvim" },
+  { "dhruvasagar/vim-table-mode", cmd = { "TableModeEnable", "TableModeToggle" } },
+  { "jbyuki/venn.nvim", cmd = "VBox" },
 }

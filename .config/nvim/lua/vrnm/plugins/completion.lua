@@ -9,15 +9,56 @@ return {
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
 			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-nvim-lsp-signature-help",
 			{ "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
 			"saadparwaiz1/cmp_luasnip",
 			"rafamadriz/friendly-snippets",
+			{
+				"windwp/nvim-autopairs",
+				config = true,
+			},
 		},
 		config = function()
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
+			local snippet_kind = require("cmp.types").lsp.CompletionItemKind.Snippet
+			local snippets_loaded = false
 
-			require("luasnip/loaders/from_vscode").lazy_load()
+			local function load_snippets()
+				if snippets_loaded then
+					return
+				end
+				require("luasnip/loaders/from_vscode").lazy_load()
+				snippets_loaded = true
+			end
+
+			local function keep_lsp_entry(entry)
+				return entry:get_kind() ~= snippet_kind
+			end
+
+			local function complete_snippets()
+				load_snippets()
+				cmp.complete({
+					config = {
+						sources = {
+							{
+								name = "nvim_lsp",
+								priority = 1000,
+								entry_filter = function(entry)
+									return entry:get_kind() == snippet_kind
+								end,
+							},
+							{ name = "luasnip", priority = 900 },
+						},
+					},
+				})
+			end
+			vim.keymap.set("i", "<C-k>", complete_snippets, {
+				desc = "Complete snippets on demand",
+				silent = true,
+			})
+
+			cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
 
 			local kind_icons = {
 				Text = "",
@@ -82,6 +123,13 @@ return {
 							fallback()
 						end
 					end, { "i", "s" }),
+					["<C-l>"] = cmp.mapping(function(fallback)
+						if luasnip.expand_or_jumpable() then
+							luasnip.expand_or_jump()
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
 					["<Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
@@ -114,11 +162,14 @@ return {
 						return vim_item
 					end,
 				},
+				sorting = {
+					priority_weight = 2,
+				},
 				sources = {
-					{ name = "nvim_lsp" },
-					{ name = "luasnip" },
-					{ name = "buffer" },
-					{ name = "path" },
+					{ name = "nvim_lsp", priority = 1000, entry_filter = keep_lsp_entry },
+					{ name = "nvim_lsp_signature_help", priority = 950 },
+					{ name = "path", priority = 500 },
+					{ name = "buffer", priority = 250, keyword_length = 3 },
 				},
 				confirm_opts = {
 					behavior = cmp.ConfirmBehavior.Replace,

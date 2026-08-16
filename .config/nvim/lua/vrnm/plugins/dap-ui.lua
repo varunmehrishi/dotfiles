@@ -1,5 +1,6 @@
 return {
   "rcarriga/nvim-dap-ui",
+  event = "VeryLazy",
   dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
   keys = {
     { "<leader>Du", function() require("dapui").toggle() end, desc = "Toggle DAP UI" },

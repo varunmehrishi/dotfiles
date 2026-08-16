@@ -37,15 +37,6 @@ return {
 				end,
 			},
 
-			-- DAP configuration
-			dap = {
-				adapter = {
-					type = "executable",
-					command = "lldb-vscode",
-					name = "rt_lldb",
-				},
-			},
-
 			-- LSP server configuration
 			server = {
 				on_attach = function(client, bufnr)

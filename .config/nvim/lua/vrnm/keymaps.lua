@@ -49,9 +49,9 @@ vim.keymap.set('n', '<leader>fml', '<cmd>CellularAutomaton make_it_rain<CR>')
 -- Neotree removed, use <leader>e for oil.nvim instead
 
 -- Global LSP keymaps (don't require LSP buffer)
-vim.keymap.set('n', '<leader>li', '<cmd>LspInfo<CR>', opts) -- LSP info
-vim.keymap.set('n', '<leader>lI', '<cmd>Mason<CR>', opts) -- Mason info
-vim.keymap.set('n', '<leader>lr', '<cmd>LspRestart<CR>', opts) -- Restart LSP
+vim.keymap.set('n', '<leader>li', '<cmd>LspInfo<CR>', vim.tbl_extend('force', opts, { desc = 'LSP info' }))
+vim.keymap.set('n', '<leader>lI', '<cmd>Mason<CR>', vim.tbl_extend('force', opts, { desc = 'Mason tool installer' }))
+vim.keymap.set('n', '<leader>lR', '<cmd>LspRestart<CR>', vim.tbl_extend('force', opts, { desc = 'Restart LSP' }))
 
 -- venn.nvim: enable or disable keymappings
 function _G.Toggle_venn()

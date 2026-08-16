@@ -1,6 +1,59 @@
 -- Enhanced diagnostics configuration for better error display
 local M = {}
 
+local diagnostic_display = "text"
+
+M.toggle = function()
+  local enabled = vim.diagnostic.is_enabled({ bufnr = 0 })
+  vim.diagnostic.enable(not enabled, { bufnr = 0 })
+  vim.notify("Diagnostics " .. (enabled and "disabled" or "enabled") .. " for this buffer")
+end
+
+M.cycle_display = function()
+  if diagnostic_display == "text" then
+    diagnostic_display = "lines"
+    vim.diagnostic.config({ virtual_text = false, virtual_lines = { current_line = true } })
+  elseif diagnostic_display == "lines" then
+    diagnostic_display = "hidden"
+    vim.diagnostic.config({ virtual_text = false, virtual_lines = false })
+  else
+    diagnostic_display = "text"
+    vim.diagnostic.config({
+      virtual_text = {
+        spacing = 4,
+        prefix = "●",
+        format = function(diagnostic)
+          return diagnostic.code and string.format("[%s]", diagnostic.code) or ""
+        end,
+      },
+      virtual_lines = false,
+    })
+  end
+  vim.notify("Diagnostic display: " .. diagnostic_display)
+end
+
+M.copy_at_cursor = function()
+  local diagnostics = vim.diagnostic.get(0, { lnum = vim.api.nvim_win_get_cursor(0)[1] - 1 })
+  if #diagnostics == 0 then
+    vim.notify("No diagnostic on the current line", vim.log.levels.INFO)
+    return
+  end
+
+  local messages = vim.tbl_map(function(diagnostic)
+    return diagnostic.message
+  end, diagnostics)
+  vim.fn.setreg("+", table.concat(messages, "\n"))
+  vim.notify(("Copied %d diagnostic message%s"):format(#messages, #messages == 1 and "" or "s"))
+end
+
+M.jump_error = function(count)
+  vim.diagnostic.jump({
+    count = count,
+    severity = vim.diagnostic.severity.ERROR,
+    float = { border = "rounded" },
+  })
+end
+
 -- Function to show all diagnostics in the current buffer
 M.show_buffer_diagnostics = function()
   -- Open a floating window with all diagnostics in the current buffer
@@ -154,6 +207,13 @@ M.setup = function()
       max_width = 100,
       max_height = 20,
     },
+  })
+
+  vim.api.nvim_create_user_command("DiagnosticsToggle", M.toggle, {
+    desc = "Toggle diagnostics in the current buffer",
+  })
+  vim.api.nvim_create_user_command("DiagnosticsDisplay", M.cycle_display, {
+    desc = "Cycle diagnostic text, current-line virtual lines, and hidden display",
   })
 
 end
