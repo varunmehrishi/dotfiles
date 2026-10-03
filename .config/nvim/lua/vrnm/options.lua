@@ -7,6 +7,7 @@ if vim.fn.executable(pynvim_python) == 1 then
   vim.g.python3_host_prog = pynvim_python
 end
 
+local undo_dir = vim.fn.stdpath('state') .. '/undo'
 local options = {
   backup = false,                              -- disable backup files
   clipboard = "unnamedplus",                   -- use the system clipboard by default
@@ -30,7 +31,7 @@ local options = {
   splitbelow = true,                           -- horizontal splits open below
   splitright = true,                           -- vertical splits open to the right
   updatetime = 300,                            -- faster completions
-  undodir = os.getenv('HOME') .. '/.undodir',  -- Add undodir for persistent undos
+  undodir = { undo_dir, vim.fn.expand('~/.undodir') }, -- also read existing undo history
   undofile = true,                             -- enable persistent undos
   writebackup = false,                         -- write backup
   guifont = {'FiraCode Nerd Font', ':h20'},    -- gui font for neovide gui
@@ -42,5 +43,7 @@ local options = {
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
+
+vim.fn.mkdir(undo_dir, 'p', 448)
 
 vim.opt.shortmess:append "c"                    -- short message

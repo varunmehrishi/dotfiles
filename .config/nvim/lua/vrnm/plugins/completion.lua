@@ -89,6 +89,9 @@ return {
 			}
 
 			cmp.setup({
+				enabled = function()
+					return not vim.b.bigfile and vim.bo.buftype ~= "prompt"
+				end,
 				performance = {
 					debounce = 60,
 					throttle = 30,

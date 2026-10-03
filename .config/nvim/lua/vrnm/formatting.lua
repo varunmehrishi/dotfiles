@@ -30,16 +30,18 @@ conform.setup({
   },
 
   -- Format on save
-  format_on_save = {
-    timeout_ms = 3000,
-    lsp_fallback = true,
-  },
+  format_on_save = function(bufnr)
+    if vim.b[bufnr].bigfile or vim.bo[bufnr].buftype ~= "" or not vim.bo[bufnr].modifiable then
+      return
+    end
+    return { timeout_ms = 3000, lsp_format = "fallback" }
+  end,
 })
 
 -- Manual format keymap
 vim.keymap.set({ "n", "v" }, "<leader>mp", function()
   conform.format({
-    lsp_fallback = true,
+    lsp_format = "fallback",
     async = false,
     timeout_ms = 3000,
   })

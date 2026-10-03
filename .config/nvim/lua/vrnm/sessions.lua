@@ -29,7 +29,11 @@ function M.save(opts)
 
 	vim.fn.mkdir(session_dir, "p")
 	local session_path, root_path = paths(root)
-	vim.cmd("silent! mksession! " .. vim.fn.fnameescape(session_path))
+	local saved, err = pcall(vim.cmd, "silent mksession! " .. vim.fn.fnameescape(session_path))
+	if not saved then
+		vim.notify("Could not save session: " .. tostring(err), vim.log.levels.ERROR)
+		return
+	end
 	vim.fn.writefile({ root }, root_path)
 	if not opts.silent then
 		vim.notify("Session saved for " .. root)

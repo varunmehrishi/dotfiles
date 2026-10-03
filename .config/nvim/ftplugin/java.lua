@@ -12,7 +12,7 @@ if not root_dir then
 end
 
 local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
-local workspace_dir = vim.fn.expand("~/.local/share/eclipse/" .. project_name)
+local workspace_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "eclipse", project_name .. "-" .. vim.fn.sha256(root_dir):sub(1, 12))
 
 -- Bemol integration: read workspace folders from .bemol/ws_root_folders
 local function get_bemol_workspace_folders()

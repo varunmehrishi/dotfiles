@@ -41,14 +41,10 @@ local servers = {
 -- Setup mason-lspconfig
 mason_lspconfig.setup({
   ensure_installed = servers,
-  automatic_installation = true,
   -- Servers are configured and enabled explicitly in vrnm/lsp/configs.lua.
   -- Leaving Mason's automatic enablement on also starts every installed
   -- package with an lspconfig entry (including the StyLua formatter).
   automatic_enable = false,
-  handlers = {
-    ["jdtls"] = function() end, -- configured by nvim-jdtls in ftplugin/java.lua
-  },
 })
 
 -- Auto-install formatters and linters
@@ -62,7 +58,7 @@ local function ensure_installed(tools)
   for _, tool in ipairs(tools) do
     if registry.has_package(tool) then
       local p = registry.get_package(tool)
-      if not p:is_installed() then
+      if not p:is_installed() and not p:is_installing() then
         print("Installing " .. tool)
         p:install()
       end
@@ -89,15 +85,17 @@ local tools = {
   -- We'll handle C/C++ linting differently
 }
 
--- Install tools after Mason is ready
-vim.api.nvim_create_autocmd("User", {
-  pattern = "MasonRegistryReady",
-  callback = function()
-    ensure_installed(tools)
-  end,
-})
-
--- If Mason registry is already ready, install immediately
-if pcall(require, "mason-registry") then
-  ensure_installed(tools)
+-- Refresh asynchronously so a fresh install has registry metadata before
+-- looking up packages. Mason does not emit a MasonRegistryReady event.
+local registry_ok, registry = pcall(require, "mason-registry")
+if registry_ok then
+  registry.refresh(function(success)
+    vim.schedule(function()
+      if success then
+        ensure_installed(tools)
+      else
+        vim.notify("Mason registry refresh failed; retry with :MasonUpdate", vim.log.levels.WARN)
+      end
+    end)
+  end)
 end

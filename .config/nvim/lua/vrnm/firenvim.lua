@@ -7,8 +7,26 @@ local solution_helper = {
 	"",
 }
 
+local python_helper = {
+	"from typing import Any, Callable  # noqa: F401",
+	"from typing import DefaultDict, Deque, Dict  # noqa: F401",
+	"from typing import Iterable, Iterator, List  # noqa: F401",
+	"from typing import Optional, Sequence, Set, Tuple  # noqa: F401",
+	"",
+}
+
 local function has_solution_helper(lines)
 	for index, line in ipairs(solution_helper) do
+		if lines[index] ~= line then
+			return false
+		end
+	end
+
+	return true
+end
+
+local function has_python_helper(lines)
+	for index, line in ipairs(python_helper) do
 		if lines[index] ~= line then
 			return false
 		end
@@ -97,6 +115,23 @@ local function page_content(bufnr)
 
 	if has_solution_helper(lines) then
 		local first_content_line = #solution_helper + 1
+		lines = vim.list_slice(lines, first_content_line)
+		cursor[1] = math.max(1, cursor[1] - first_content_line + 1)
+	end
+
+	if #lines == 0 then
+		lines = { "" }
+	end
+
+	return lines, cursor
+end
+
+local function python_page_content(bufnr)
+	local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+	local cursor = vim.api.nvim_win_get_cursor(0)
+
+	if has_python_helper(lines) then
+		local first_content_line = #python_helper + 1
 		lines = vim.list_slice(lines, first_content_line)
 		cursor[1] = math.max(1, cursor[1] - first_content_line + 1)
 	end
@@ -241,12 +276,22 @@ local function activate_python()
 
 	local root = root_or_error
 	local python_path = unused_scratch_path(root, "python", ".py", bufnr)
+	local original_lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+	local original_cursor = vim.api.nvim_win_get_cursor(0)
+
+	if not has_python_helper(original_lines) then
+		vim.api.nvim_buf_set_lines(bufnr, 0, 0, false, python_helper)
+		vim.api.nvim_win_set_cursor(0, { original_cursor[1] + #python_helper, original_cursor[2] })
+	end
+
 	vim.api.nvim_buf_set_name(bufnr, python_path)
 	local wrote, write_error = pcall(vim.api.nvim_buf_call, bufnr, function()
 		vim.cmd("silent write")
 	end)
 	if not wrote then
 		vim.api.nvim_buf_set_name(bufnr, original_path)
+		vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, original_lines)
+		vim.api.nvim_win_set_cursor(0, original_cursor)
 		vim.notify("Could not create the Firenvim Python file: " .. write_error, vim.log.levels.ERROR)
 		return
 	end
@@ -261,11 +306,8 @@ local function activate_python()
 			buffer = bufnr,
 			desc = "Synchronize the renamed Python buffer with Firenvim",
 			callback = function()
-				local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
-				if #lines == 0 then
-					lines = { "" }
-				end
-				vim.fn["firenvim#write"](lines, vim.api.nvim_win_get_cursor(0))
+				local lines, cursor = python_page_content(bufnr)
+				vim.fn["firenvim#write"](lines, cursor)
 			end,
 		})
 	end

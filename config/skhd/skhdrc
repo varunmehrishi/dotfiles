@@ -47,7 +47,7 @@ cmd + shift + ctrl - n : yabai -m space --create && \
 cmd + alt - w : yabai -m space --destroy
 
 # fast focus desktop
-cmd + alt - x : yabai -m space --focus recent
+ctrl + cmd + alt - x : yabai -m space --focus recent
 cmd + alt - z : yabai -m space --focus prev || skhd -k "ctrl + alt + cmd - z"
 cmd + alt - c : yabai -m space --focus next || skhd -k "ctrl + alt + cmd - c"
 cmd + alt - 1 : yabai -m space --focus  1 || skhd -k "ctrl + alt + cmd - 1"
@@ -128,7 +128,7 @@ alt - r : yabai -m space --rotate 90
 alt - y : yabai -m space --mirror y-axis
 
 # mirror tree x-axis
-alt - x : yabai -m space --mirror x-axis
+shift + alt - x : yabai -m space --mirror x-axis
 
 # toggle desktop offset
 alt - a : yabai -m space --toggle padding && yabai -m space --toggle gap

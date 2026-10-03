@@ -9,10 +9,16 @@ function M.root(bufnr, fallback)
 		"Cargo.toml",
 		"pyproject.toml",
 		"setup.py",
+		"requirements.txt",
 		"package.json",
 		".git",
 	}
-	local root = vim.fs.root(bufnr, markers) or vim.fs.root(vim.uv.cwd(), markers)
+	-- Match markers equally so a nearby JS package wins over an ancestor's
+	-- Python or Cargo manifest, including on Neovim versions with ordered markers.
+	local function is_marker(name)
+		return vim.tbl_contains(markers, name)
+	end
+	local root = vim.fs.root(bufnr, is_marker) or vim.fs.root(vim.uv.cwd(), is_marker)
 	if root or fallback == false then
 		return root
 	end
@@ -53,8 +59,11 @@ end
 
 local function package_scripts(root)
 	local package_path = vim.fs.joinpath(root, "package.json")
-	local ok, decoded = pcall(vim.json.decode, table.concat(vim.fn.readfile(package_path), "\n"))
-	if not ok or type(decoded.scripts) ~= "table" then
+	local ok, decoded = pcall(function()
+		return vim.json.decode(table.concat(vim.fn.readfile(package_path), "\n"))
+	end)
+	if not ok or type(decoded) ~= "table" or type(decoded.scripts) ~= "table" then
+		vim.notify("Could not read package.json scripts: " .. package_path, vim.log.levels.WARN)
 		return {}
 	end
 	return decoded.scripts
@@ -117,6 +126,30 @@ end
 local function nearest_test_name(filetype)
 	local cursor = vim.api.nvim_win_get_cursor(0)
 	local pattern
+	if filetype == "python" then
+		local ok, parser = pcall(vim.treesitter.get_parser, 0, "python")
+		if ok and parser then
+			parser:parse()
+			local node = vim.treesitter.get_node({ bufnr = 0 })
+			local name
+			while node do
+				if node:type() == "function_definition" and not name then
+					local field = node:field("name")[1]
+					local candidate = field and vim.treesitter.get_node_text(field, 0)
+					if candidate and candidate:match("^test_") then
+						name = candidate
+					end
+				elseif node:type() == "class_definition" and name then
+					local field = node:field("name")[1]
+					if field then
+						name = vim.treesitter.get_node_text(field, 0) .. "::" .. name
+					end
+				end
+				node = node:parent()
+			end
+			return name
+		end
+	end
 	if filetype == "rust" then
 		local attribute_pattern = [=[^\s*#\[.*test.*\]]=]
 		vim.api.nvim_win_set_cursor(0, { cursor[1], #vim.fn.getline(cursor[1]) })
@@ -216,11 +249,13 @@ function M.test_file()
 end
 
 function M.test_all()
+	vim.cmd("silent wall")
 	local root = M.root(0)
 	if vim.uv.fs_stat(vim.fs.joinpath(root, "Cargo.toml")) then
 		M.run({ "cargo", "test", "--", "--nocapture" }, { cwd = root })
 	elseif
 		vim.uv.fs_stat(vim.fs.joinpath(root, "pyproject.toml")) or vim.uv.fs_stat(vim.fs.joinpath(root, "setup.py"))
+		or vim.uv.fs_stat(vim.fs.joinpath(root, "requirements.txt"))
 	then
 		local command = pytest_command(root, { "-q" })
 		if command then
@@ -258,6 +293,7 @@ function M.choose_task()
 		}
 	elseif
 		vim.uv.fs_stat(vim.fs.joinpath(root, "pyproject.toml")) or vim.uv.fs_stat(vim.fs.joinpath(root, "setup.py"))
+		or vim.uv.fs_stat(vim.fs.joinpath(root, "requirements.txt"))
 	then
 		local python = python_command(root)
 		local pytest = pytest_command(root, { "-q" })

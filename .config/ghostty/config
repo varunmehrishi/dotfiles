@@ -1,16 +1,29 @@
+# Shared settings for the M1 and M5 MacBook Pros.
+# Homebrew uses /opt/homebrew on both machines. Keep a usable shell if tmux
+# has not been installed yet. Later tabs/windows use the normal login shell.
+command = /bin/zsh -l
+initial-command = "/bin/zsh -l -c 'export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH; if command -v tmux >/dev/null 2>&1; then exec tmux new-session -A -s mac; else exec /bin/zsh -l; fi'"
+
+# Appearance
 bold-is-bright = true
-initial-command = "/bin/zsh -c -l 'tmux attach -t  mac || tmux new -s mac'"
-confirm-close-surface = false
-font-family = "FiraCode Nerd Font"
+font-family = "FiraCode Nerd Font Mono"
 font-size = 20
 font-style = "Retina"
 font-thicken = true
+theme = "Dracula"
+window-padding-x = 6
+window-padding-y = 6
+window-padding-balance = true
+
+# Restore each Mac's own window layout instead of forcing a large grid.
+window-save-state = always
 macos-non-native-fullscreen = true
 macos-option-as-alt = true
 macos-titlebar-style = hidden
 quit-after-last-window-closed = true
-theme = "Dracula"
-window-height = 100
-window-width = 200
+confirm-close-surface = false
 clipboard-read = allow
 clipboard-write = allow
+
+# Optional per-device settings, excluded from Git. Paths are relative to this file.
+config-file = ?config.local

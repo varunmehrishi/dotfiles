@@ -43,6 +43,9 @@ return {
 		},
 
 		on_attach = function(bufnr)
+			if vim.b[bufnr].bigfile then
+				return false
+			end
 			local gs = package.loaded.gitsigns
 
 			local function map(mode, l, r, opts)

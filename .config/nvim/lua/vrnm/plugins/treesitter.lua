@@ -1,10 +1,11 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master", -- this configuration uses the legacy configs API
     event = { "BufReadPost", "BufNewFile", "FileType" },
     build = ":TSUpdate",
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
+      { "nvim-treesitter/nvim-treesitter-textobjects", branch = "master" },
     },
     config = function()
       require("nvim-treesitter.configs").setup({
@@ -14,11 +15,16 @@ return {
 
         indent = {
           enable = true,
+          disable = function(_, bufnr)
+            return vim.b[bufnr].bigfile == true
+          end,
         },
 
         highlight = {
           enable = true,
-          disable = {},
+          disable = function(_, bufnr)
+            return vim.b[bufnr].bigfile == true
+          end,
           additional_vim_regex_highlighting = false,
         },
 
