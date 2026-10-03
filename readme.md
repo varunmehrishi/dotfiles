@@ -70,6 +70,10 @@ Legacy Vim configuration kept for reference.
 
 Window snapping utility configuration for macOS.
 
+### Logi Options+ (`logi-options-plus/`)
+
+On this Mac, run `python3 logi-options-plus/sync.py backup` to refresh the tracked settings. On another Mac, install and open Logi Options+ once, quit it and its agent, then run `python3 logi-options-plus/sync.py restore` from the cloned repo. Reopen Logi Options+ afterward. Restore requires the same settings schema version and saves the previous database as `settings.pre-restore.db`.
+
 ### Vifm (`.vifm/`)
 
 Vi-like file manager configuration.
